@@ -8,9 +8,16 @@ steps:
   - name: docker_sock
     path: /var/run
   commands:
-  - docker build . -t localhost:32000/freshpanbot:latest -t localhost:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
-  - docker push localhost:32000/freshpanbot
+  - docker build .
 
+- name: publish
+  image: plugins/docker
+  volumes:
+  - name: docker_sock
+    path: /var/run
+  settings:
+    repo: localhost:32000/freshpanbot
+    tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
 - name: deliver
   image: sinlead/drone-kubectl
   settings:
@@ -22,7 +29,6 @@ steps:
       from_secret: k8s_token
   commands:
     - kubectl apply -f deployment.yml
-
 volumes:
   - name: docker_sock
     host:
