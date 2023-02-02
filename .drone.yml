@@ -32,4 +32,4 @@ volumes:
       path: /var/run
   - name: docker_var
     host:
-      path:/var/lib/docker
+      path: /var/lib/docker
