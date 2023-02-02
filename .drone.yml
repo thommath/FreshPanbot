@@ -4,6 +4,7 @@ name: freshpanbot
 steps:
 - name: publish
   image: plugins/docker
+  privileged: true
   settings:
     repo: localhost:32000/freshpanbot
     tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
