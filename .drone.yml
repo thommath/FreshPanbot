@@ -7,7 +7,7 @@ steps:
   image: docker:dind
   volumes:
   - name: docker_sock
-    path: /var/run/docker.sock
+    path: /var/run
   commands:
   - docker build . -t localhost:32000/freshpanbot:latest
   - docker push localhost:32000/freshpanbot
@@ -15,4 +15,4 @@ steps:
 volumes:
   - name: docker_sock
     host:
-      path: /var/run/docker.sock
+      path: /var/run
