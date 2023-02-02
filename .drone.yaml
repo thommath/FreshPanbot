@@ -1,9 +1,9 @@
 kind: pipeline
-type: kubernetes
-name: default
+type: docker
+name: freshpanbot
 
 steps:
-- name: build image
+- name: build
   image: alpine
   commands:
   - docker build . -t localhost:32000/freshpanbot:latest
