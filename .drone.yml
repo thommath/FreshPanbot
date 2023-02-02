@@ -5,6 +5,9 @@ steps:
 - name: publish
   image: plugins/docker
   privileged: true
+  volumes:
+  - name: docker_sock
+    path: /var/run
   settings:
     repo: localhost:32000/freshpanbot
     tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
@@ -20,3 +23,8 @@ steps:
       from_secret: k8s_token
   commands:
     - kubectl apply -f deployment.yml
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run
