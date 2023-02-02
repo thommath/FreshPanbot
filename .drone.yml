@@ -2,17 +2,14 @@ kind: pipeline
 type: kubernetes
 name: freshpanbot
 steps:
-- name: publish
-  image: plugins/docker
-  privileged: true
+- name: build
+  image: docker:dind
   volumes:
   - name: docker_sock
     path: /var/run
-  - name: docker_var
-    path: /var/lib/docker
-  settings:
-    repo: localhost:32000/freshpanbot
-    tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
+  commands:
+  - docker build . -t localhost:32000/freshpanbot:latest -t localhost:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
+  - docker push localhost:32000/freshpanbot
 
 - name: deliver
   image: sinlead/drone-kubectl
@@ -30,6 +27,3 @@ volumes:
   - name: docker_sock
     host:
       path: /var/run
-  - name: docker_var
-    host:
-      path: /var/lib/docker
