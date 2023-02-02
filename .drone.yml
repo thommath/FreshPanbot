@@ -8,6 +8,8 @@ steps:
   volumes:
   - name: docker_sock
     path: /var/run
+  - name: docker_var
+    path: /var/lib/docker
   settings:
     repo: localhost:32000/freshpanbot
     tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
@@ -28,3 +30,6 @@ volumes:
   - name: docker_sock
     host:
       path: /var/run
+  - name: docker_var
+    host:
+      path:/var/lib/docker
