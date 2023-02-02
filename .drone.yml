@@ -13,6 +13,7 @@ steps:
 
 - name: deliver
   image: sinlead/drone-kubectl
+  network_mode: "host"
   settings:
     kubernetes_server:
       from_secret: k8s_server
