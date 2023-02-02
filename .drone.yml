@@ -4,7 +4,7 @@ name: freshpanbot
 
 steps:
 - name: build
-  image: alpine
+  image: docker
   commands:
   - docker build . -t localhost:32000/freshpanbot:latest
   - docker push localhost:32000/freshpanbot
