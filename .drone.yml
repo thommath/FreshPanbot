@@ -12,6 +12,9 @@ steps:
 
 - name: publish
   image: plugins/docker
+  volumes:
+  - name: docker_sock
+    path: /var/run
   settings:
     repo: localhost:32000/freshpanbot
     tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
