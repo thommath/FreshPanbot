@@ -9,7 +9,7 @@ steps:
   - name: docker_sock
     path: /var/run
   commands:
-  - docker build . -t freshpanbot:latest
+  - docker build . -t freshpanbot:$DRONE_COMMIT_SHA
   - docker push localhost:32000/freshpanbot
 
 volumes:
