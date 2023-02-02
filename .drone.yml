@@ -24,6 +24,7 @@ steps:
       from_secret: k8s_token
   commands:
     - kubectl apply -f deployment.yml
+    - kubectl rollout restart -n default deployment freshpanbot-app
 
 volumes:
   - name: docker_sock
