@@ -10,7 +10,7 @@ steps:
     path: /var/run
   commands:
   - docker build . -t freshpanbot:latest
-  - docker push freshpanbot
+  - docker push localhost:32000/freshpanbot
 
 volumes:
   - name: docker_sock
