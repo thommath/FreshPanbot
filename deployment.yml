@@ -27,6 +27,6 @@ spec:
       containers:
       - name: panbot-app
         image: localhost:32000/freshpanbot
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 8000
