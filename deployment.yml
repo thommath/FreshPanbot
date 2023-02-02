@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: freshpanbot-service
+spec:
+  selector:
+    name: freshpanbot-app
+  ports:
+  - protocol: TCP
+    port: 8001
+    targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshpanbot-app
+spec:
+  selector:
+    matchLabels:
+      name: freshpanbot-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: freshpanbot-app
+    spec:
+      containers:
+      - name: panbot-app
+        image: localhost:32000/freshpanbot
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
