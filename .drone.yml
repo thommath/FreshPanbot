@@ -5,6 +5,14 @@ name: freshpanbot
 steps:
 - name: build
   image: docker:dind
+  volumes:
+  - name: docker_sock
+    path: /var/run/docker.sock
   commands:
   - docker build . -t localhost:32000/freshpanbot:latest
   - docker push localhost:32000/freshpanbot
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
