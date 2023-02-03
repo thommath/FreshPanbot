@@ -139,7 +139,7 @@ export default function DrawingComponent() {
   });
 
   return (
-    <>
+    <div class="flex gap-2 w-full flex-col">
       <div className="relative rounded-full h-64 w-64 bg-gray-300">
         <svg
           className="absolute top-0 left-0 h-full w-full"
@@ -185,6 +185,6 @@ export default function DrawingComponent() {
           Redo
         </button>
       </div>
-    </>
+    </div>
   );
 }
