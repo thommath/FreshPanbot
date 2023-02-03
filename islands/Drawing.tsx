@@ -100,7 +100,15 @@ export default function DrawingComponent() {
   const handleUpload = () => {
     // code to handle uploading the strokes
     const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "");
-    fetch("/panbot/add", {
+    fetch("/api/add", {
+      body: path,
+      method: "POST",
+    }).then(handleDiscard);
+  };
+  const handleSetUpload = () => {
+    // code to handle uploading the strokes
+    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "");
+    fetch("/api/set", {
       body: path,
       method: "POST",
     }).then(handleDiscard);
@@ -162,6 +170,13 @@ export default function DrawingComponent() {
           disabled={strokes.length === 0}
         >
           Upload
+        </button>
+        <button
+          className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+          onClick={handleUpload}
+          disabled={strokes.length === 0}
+        >
+          Upload (clear queue)
         </button>
         <button
           className="bg-blue-500 px-3 py-2 rounded-lg text-white"

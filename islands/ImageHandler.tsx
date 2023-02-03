@@ -48,7 +48,7 @@ export default function ImageHandler() {
       return;
     }
     setViewOptions(options => ({...options, uploading: true}));
-    fetch("/panbot/add", {
+    fetch("/api/add", {
       body: result.path,
       method: "POST",
     }).then(discard);
