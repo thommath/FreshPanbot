@@ -1,6 +1,6 @@
 import { HandlerContext } from "$fresh/server.ts";
 
-import { connect } from "https://deno.land/x/redis/mod.ts";
+import { connect } from "redis";
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Response => {
   const redis = await connect({
@@ -10,5 +10,5 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Response => 
   const ok = await redis.set("hoge", "fuga");
   const fuga = await redis.get("hoge");
   
-  return new Response(fuga);
+  return new Response("hello");
 };
