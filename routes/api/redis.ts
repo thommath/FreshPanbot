@@ -10,5 +10,5 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Response => 
   const ok = await redis.set("hoge", "fuga");
   const fuga = await redis.get("hoge");
   
-  return new Response("hello");
+  return new Response(fuga);
 };
