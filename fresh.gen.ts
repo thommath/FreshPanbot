@@ -4,11 +4,15 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/[name].tsx";
-import * as $1 from "./routes/api/joke.ts";
-import * as $2 from "./routes/api/redis.ts";
-import * as $3 from "./routes/drawing.tsx";
-import * as $4 from "./routes/image.tsx";
-import * as $5 from "./routes/index.tsx";
+import * as $1 from "./routes/api/add.ts";
+import * as $2 from "./routes/api/constants.ts";
+import * as $3 from "./routes/api/get.ts";
+import * as $4 from "./routes/api/joke.ts";
+import * as $5 from "./routes/api/redis.ts";
+import * as $6 from "./routes/api/set.ts";
+import * as $7 from "./routes/drawing.tsx";
+import * as $8 from "./routes/image.tsx";
+import * as $9 from "./routes/index.tsx";
 import * as $$0 from "./islands/Counter.tsx";
 import * as $$1 from "./islands/Drawing.tsx";
 import * as $$2 from "./islands/ImageHandler.tsx";
@@ -16,11 +20,15 @@ import * as $$2 from "./islands/ImageHandler.tsx";
 const manifest = {
   routes: {
     "./routes/[name].tsx": $0,
-    "./routes/api/joke.ts": $1,
-    "./routes/api/redis.ts": $2,
-    "./routes/drawing.tsx": $3,
-    "./routes/image.tsx": $4,
-    "./routes/index.tsx": $5,
+    "./routes/api/add.ts": $1,
+    "./routes/api/constants.ts": $2,
+    "./routes/api/get.ts": $3,
+    "./routes/api/joke.ts": $4,
+    "./routes/api/redis.ts": $5,
+    "./routes/api/set.ts": $6,
+    "./routes/drawing.tsx": $7,
+    "./routes/image.tsx": $8,
+    "./routes/index.tsx": $9,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
