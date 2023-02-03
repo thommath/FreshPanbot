@@ -173,7 +173,7 @@ export default function DrawingComponent() {
         </button>
         <button
           className="bg-blue-500 px-3 py-2 rounded-lg text-white"
-          onClick={handleUpload}
+          onClick={handleSetUpload}
           disabled={strokes.length === 0}
         >
           Upload (clear queue)
