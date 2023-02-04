@@ -204,7 +204,7 @@ export default function ImageHandler() {
                 type="range"
                 min={10}
                 max={100}
-                step={10}
+                step={5}
                 value={options.resolution}
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                 onChange={(el) =>
