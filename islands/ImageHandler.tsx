@@ -4,6 +4,7 @@ import {
   findPathFromImage,
   ImagePathOptions,
 } from "../scripts/imageToCommands.ts";
+import { SIZE } from "./Drawing.tsx";
 
 declare namespace JSX {
   interface IntrinsicElements {
@@ -27,6 +28,7 @@ export default function ImageHandler() {
     minimumNeighbours: 5,
     neighbourDistance: 2,
     resolution: 50,
+    finalSize: SIZE,
   });
   const [viewOptions, setViewOptions] = useState({
     animate: false,
@@ -201,7 +203,7 @@ export default function ImageHandler() {
                 id="resolution"
                 type="range"
                 min={10}
-                max={200}
+                max={100}
                 step={10}
                 value={options.resolution}
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"

@@ -25,6 +25,7 @@ function setPixelColor(imageData: ImageData, color: ReturnType<typeof getPixelCo
 export type ImagePathOptions = {
     imageUrl: string
     resolution?: number
+    finalSize?: number
     maxEdgeOverlap?: number
     colorDifference?: number
     neighbourDistance?: number
@@ -37,6 +38,7 @@ export async function findPathFromImage(params: ImagePathOptions) {
     const options = {
         imageUrl: params.imageUrl,
         resolution: params.resolution || 50,
+        finalSize: params.finalSize || params.resolution || 50,
         maxEdgeOverlap: params.maxEdgeOverlap || 0.3,
         colorDifference: params.colorDifference || 0.15,
         neighbourDistance: params.neighbourDistance || 2,
@@ -156,6 +158,9 @@ export async function findPathFromImage(params: ImagePathOptions) {
     // Initialize the path
     let path = ``;
 
+    // Find the scaling factor to go from resolution to finalSize
+    const scaling = options.finalSize / options.resolution;
+
     for (const points of sortedSubClusters) {
         path += `M ${points[0][0]} ${points[0][1]} `;
         for (let j = 0; j < points.length; j++) {
@@ -164,9 +169,9 @@ export async function findPathFromImage(params: ImagePathOptions) {
                 continue;
             }
             if (j > 0 && Math.abs(points[j-1][1] - point[1]) <= 2) {
-                path += `L ${point[0]} ${point[1]} `;
+                path += `L ${point[0] * scaling} ${point[1] * scaling} `;
             } else {
-                path += `M ${point[0]} ${point[1]} `;
+                path += `M ${point[0] * scaling} ${point[1] * scaling} `;
             }
         }
     }

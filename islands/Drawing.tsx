@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 type Stroke = { x: number; y: number }[];
 
-const size = 100;
+export const SIZE = 100;
 
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -39,8 +39,8 @@ export default function DrawingComponent() {
     const canvasHeight = boundingBox.height;
     const movedX = x - boundingBox.left;
     const movedY = y - boundingBox.top;
-    const normalizedX = Math.round((movedX / canvasWidth) * size);
-    const normalizedY = Math.round((movedY / canvasHeight) * size);
+    const normalizedX = Math.round((movedX / canvasWidth) * SIZE);
+    const normalizedY = Math.round((movedY / canvasHeight) * SIZE);
     return { x: normalizedX, y: normalizedY };
   };
 
@@ -151,7 +151,7 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
-        stroke-width="3"
+        stroke-width={3 * SIZE / 100}
         stroke-linecap="round"
         style={{ fill: "none", stroke: "black" }}
       />
@@ -163,7 +163,7 @@ export default function DrawingComponent() {
       <div className="relative rounded-full h-64 w-64 bg-gray-300">
         <svg
           className="absolute top-0 left-0 h-full w-full"
-          viewBox={`0 0 ${size} ${size}`}
+          viewBox={`0 0 ${SIZE} ${SIZE}`}
         >
           {strokeSVG}
         </svg>
