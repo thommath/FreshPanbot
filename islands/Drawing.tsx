@@ -141,6 +141,7 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
+        stroke-width="3"
         style={{ fill: "none", stroke: "black" }}
       />
     );
