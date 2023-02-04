@@ -44,11 +44,15 @@ export default function DrawingComponent() {
 
   const handleMouseDown = (e: MouseEvent) => {
     setIsDrawing(true);
+    e.stopPropagation();
+    e.preventDefault();
     setCurrentStroke([normalizeInput({ x: e.clientX, y: e.clientY })]);
   };
 
   const handleTouchStart = (e: TouchEvent) => {
     setIsDrawing(true);
+    e.stopPropagation();
+    e.preventDefault();
     setCurrentStroke([
       normalizeInput({ x: e.touches[0].clientX, y: e.touches[0].clientY }),
     ]);
@@ -56,6 +60,8 @@ export default function DrawingComponent() {
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDrawing) return;
+    e.stopPropagation();
+    e.preventDefault();
     setCurrentStroke(
       (
         prevStroke,
@@ -65,6 +71,8 @@ export default function DrawingComponent() {
 
   const handleTouchMove = (e: TouchEvent) => {
     if (!isDrawing) return;
+    e.stopPropagation();
+    e.preventDefault();
     setCurrentStroke(
       (prevStroke) => [
         ...prevStroke,
@@ -75,15 +83,6 @@ export default function DrawingComponent() {
       ],
     );
   };
-
-  function removeRepeatedPoints(stroke: Stroke) {
-    return stroke.filter((point, index) => {
-        if (index === 0) {
-            return true;
-        }
-        return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
-    });
-}
 
   const handleMouseUp = () => {
     setIsDrawing(false);
@@ -96,6 +95,16 @@ export default function DrawingComponent() {
     setStrokes((prevStrokes) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
     setCurrentStroke([]);
   };
+
+  function removeRepeatedPoints(stroke: Stroke) {
+    return stroke.filter((point, index) => {
+        if (index === 0) {
+            return true;
+        }
+        return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
+    });
+}
+
 
   const handleUpload = () => {
     // code to handle uploading the strokes
