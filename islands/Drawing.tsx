@@ -109,7 +109,7 @@ export default function DrawingComponent() {
 
   const handleUpload = () => {
     // code to handle uploading the strokes
-    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "");
+    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "") + " Z";
     fetch("/api/add", {
       body: path,
       method: "POST",
@@ -117,7 +117,7 @@ export default function DrawingComponent() {
   };
   const handleSetUpload = () => {
     // code to handle uploading the strokes
-    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "");
+    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "") + " Z";
     fetch("/api/set", {
       body: path,
       method: "POST",
@@ -143,7 +143,7 @@ export default function DrawingComponent() {
   };
 
   const strokeToPath = (stroke: Stroke) => {
-    return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ") + " Z";
+    return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
   };
 
   const strokeSVG = [...strokes, currentStroke].map((stroke, index) => {
