@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 type Stroke = { x: number; y: number }[];
 
+const size = 200;
+
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentStroke, setCurrentStroke] = useState<Stroke>([]);
@@ -37,8 +39,8 @@ export default function DrawingComponent() {
     const canvasHeight = boundingBox.height;
     const movedX = x - boundingBox.left;
     const movedY = y - boundingBox.top;
-    const normalizedX = Math.round((movedX / canvasWidth) * 100);
-    const normalizedY = Math.round((movedY / canvasHeight) * 100);
+    const normalizedX = Math.round((movedX / canvasWidth) * size);
+    const normalizedY = Math.round((movedY / canvasHeight) * size);
     return { x: normalizedX, y: normalizedY };
   };
 
@@ -105,7 +107,6 @@ export default function DrawingComponent() {
     });
 }
 
-
   const handleUpload = () => {
     // code to handle uploading the strokes
     const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "");
@@ -150,7 +151,8 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
-        stroke-width="3"
+        stroke-width="6"
+        stroke-linecap="round"
         style={{ fill: "none", stroke: "black" }}
       />
     );
@@ -161,7 +163,7 @@ export default function DrawingComponent() {
       <div className="relative rounded-full h-64 w-64 bg-gray-300">
         <svg
           className="absolute top-0 left-0 h-full w-full"
-          viewBox="0 0 100 100"
+          viewBox={`0 0 ${size} ${size}`}
         >
           {strokeSVG}
         </svg>
