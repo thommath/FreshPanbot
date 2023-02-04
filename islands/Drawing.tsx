@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 type Stroke = { x: number; y: number }[];
 
-const size = 200;
+const size = 100;
 
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -143,7 +143,7 @@ export default function DrawingComponent() {
   };
 
   const strokeToPath = (stroke: Stroke) => {
-    return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
+    return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ") + " Z";
   };
 
   const strokeSVG = [...strokes, currentStroke].map((stroke, index) => {
@@ -151,7 +151,7 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
-        stroke-width="6"
+        stroke-width="3"
         stroke-linecap="round"
         style={{ fill: "none", stroke: "black" }}
       />
