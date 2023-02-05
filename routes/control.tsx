@@ -16,10 +16,10 @@ export const handler: Handlers<PrinterQueue> = {
 
 export default function Home(props: PageProps<PrinterQueue>) {
   function print() {
-    fetch("/api/print", { method: "POST"});
+    fetch("/api/print", { method: "POST" });
   }
   function cancel() {
-    fetch("/api/cancel", { method: "POST"});
+    fetch("/api/cancel", { method: "POST" });
   }
   return (
     <>
@@ -33,12 +33,29 @@ export default function Home(props: PageProps<PrinterQueue>) {
           {props.data.items.length &&
             (
               <div>
-                <button onClick={print}>Print next</button>
-                <button onClick={cancel}>Cancel next</button>
+                <div className="flex">
+                  <button
+                    onClick={print}
+                    className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+                  >
+                    Print next
+                  </button>
+                  <button
+                    onClick={cancel}
+                    className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+                  >
+                    Cancel next
+                  </button>
+                </div>
                 {props.data.items.map((str) => (
-                  <div>
+                  <div className="rounded-full h-64 w-64 bg-gray-300">
                     <svg viewBox="0 0 100 100">
-                      <path d={str}></path>
+                      <path
+                        d={str}
+                        stroke-linecap="round"
+                        style={{ fill: "none", stroke: "black" }}
+                      >
+                      </path>
                     </svg>
                   </div>
                 ))}
