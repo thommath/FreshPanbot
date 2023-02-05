@@ -15,12 +15,6 @@ export const handler: Handlers<PrinterQueue> = {
 };
 
 export default function Home(props: PageProps<PrinterQueue>) {
-  const print = () => {
-    fetch("/api/print", { method: "POST" });
-  }
-  const cancel = () => {
-    fetch("/api/cancel", { method: "POST" });
-  }
   return (
     <>
       <Head>
@@ -35,13 +29,13 @@ export default function Home(props: PageProps<PrinterQueue>) {
               <div>
                 <div className="flex">
                   <button
-                    onClick={print}
+                    onClick={() => fetch("/api/print", { method: "POST" })}
                     className="bg-blue-500 px-3 py-2 rounded-lg text-white"
                   >
                     Print next
                   </button>
                   <button
-                    onClick={cancel}
+                    onClick={() => fetch("/api/cancel", { method: "POST" })}
                     className="bg-blue-500 px-3 py-2 rounded-lg text-white"
                   >
                     Cancel next
