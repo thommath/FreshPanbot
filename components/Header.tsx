@@ -19,6 +19,11 @@ export default function Header(props: { selectedTab: number }) {
             Drawing
           </button>
         </a>
+        <a class="w-full" href="/control">
+          <button class={`w-full p-2 bg-yellow-500 border-2 border-yellow-${props.selectedTab === 3 ? '600' : '500'}`}>
+            Control
+          </button>
+        </a>
       </div>
     </>
   );
