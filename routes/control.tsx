@@ -15,10 +15,10 @@ export const handler: Handlers<PrinterQueue> = {
 };
 
 export default function Home(props: PageProps<PrinterQueue>) {
-  function print() {
+  const print = () => {
     fetch("/api/print", { method: "POST" });
   }
-  function cancel() {
+  const cancel = () => {
     fetch("/api/cancel", { method: "POST" });
   }
   return (
