@@ -1,6 +1,7 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
+import PrintButtons from "../islands/printButtons.tsx";
 import { redis, REDIS_QUEUE_KEY } from "./api/redis.ts";
 
 interface PrinterQueue {
@@ -27,20 +28,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
           {props.data.items.length &&
             (
               <div>
-                <div className="flex">
-                  <button
-                    onClick={() => fetch("/api/print", { method: "POST" })}
-                    className="bg-blue-500 px-3 py-2 rounded-lg text-white"
-                  >
-                    Print next
-                  </button>
-                  <button
-                    onClick={() => fetch("/api/cancel", { method: "POST" })}
-                    className="bg-blue-500 px-3 py-2 rounded-lg text-white"
-                  >
-                    Cancel next
-                  </button>
-                </div>
+                <PrintButtons />
                 {props.data.items.map((str) => (
                   <div className="rounded-full h-64 w-64 bg-gray-300">
                     <svg viewBox="0 0 100 100">
