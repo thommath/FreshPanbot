@@ -28,7 +28,8 @@ export default function ImageHandler() {
     minimumNeighbours: 5,
     neighbourDistance: 2,
     resolution: 50,
-    finalSize: SIZE,
+    finalSize: (SIZE / 2) * Math.sqrt(2),
+    offset: (SIZE - (SIZE / 2) * Math.sqrt(2))/2,
   });
   const [viewOptions, setViewOptions] = useState({
     animate: false,

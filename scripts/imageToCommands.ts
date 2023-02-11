@@ -26,6 +26,7 @@ export type ImagePathOptions = {
     imageUrl: string
     resolution?: number
     finalSize?: number
+    offset?: number
     maxEdgeOverlap?: number
     colorDifference?: number
     neighbourDistance?: number
@@ -39,6 +40,7 @@ export async function findPathFromImage(params: ImagePathOptions) {
         imageUrl: params.imageUrl,
         resolution: params.resolution || 50,
         finalSize: params.finalSize || params.resolution || 50,
+        offset: params.offset || 0,
         maxEdgeOverlap: params.maxEdgeOverlap || 0.3,
         colorDifference: params.colorDifference || 0.15,
         neighbourDistance: params.neighbourDistance || 2,
@@ -169,9 +171,9 @@ export async function findPathFromImage(params: ImagePathOptions) {
                 continue;
             }
             if (j > 0 && Math.abs(points[j-1][1] - point[1]) <= 2) {
-                path += `L ${point[0] * scaling} ${point[1] * scaling} `;
+                path += `L ${options.offset + point[0] * scaling} ${options.offset + point[1] * scaling} `;
             } else {
-                path += `M ${point[0] * scaling} ${point[1] * scaling} `;
+                path += `M ${options.offset + point[0] * scaling} ${options.offset + point[1] * scaling} `;
             }
         }
     }
