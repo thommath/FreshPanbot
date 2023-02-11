@@ -1,6 +1,7 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
+import { SIZE } from "../islands/Drawing.tsx";
 import PrintButtons from "../islands/printButtons.tsx";
 import { redis, REDIS_QUEUE_KEY } from "./api/redis.ts";
 
@@ -34,6 +35,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
                     <svg viewBox="0 0 100 100">
                       <path
                         d={str}
+                        stroke-width={3 * SIZE / 100}
                         stroke-linecap="round"
                         style={{ fill: "none", stroke: "black" }}
                       >
