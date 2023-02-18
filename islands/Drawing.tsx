@@ -42,7 +42,7 @@ export default function DrawingComponent() {
     const movedY = y - boundingBox.top;
     const normalizedX = Math.round((movedX / canvasWidth) * DRAWING_SIZE);
     const normalizedY = Math.round((movedY / canvasHeight) * DRAWING_SIZE);
-    return { x: normalizedX, y: normalizedY };
+    return { x: normalizedX, y: DRAWING_SIZE-normalizedY };
   };
 
   const handleMouseDown = (e: MouseEvent) => {
@@ -169,6 +169,7 @@ export default function DrawingComponent() {
       <div className="relative rounded-full h-64 w-64 bg-gray-300">
         <svg
           className="absolute top-0 left-0 h-full w-full"
+          style="transform: scaleY(-1);"
           viewBox={`0 0 ${DRAWING_SIZE} ${DRAWING_SIZE}`}
         >
           {strokeSVG}

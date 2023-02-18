@@ -1,6 +1,6 @@
 import { Head, asset } from "$fresh/runtime.ts";
 import Header from "../components/Header.tsx";
-import { Presets } from "../islands/Presets.tsx";
+import Presets from "../islands/Presets.tsx";
 
 export default function Home() {
   return (

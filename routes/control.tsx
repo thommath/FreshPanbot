@@ -31,11 +31,14 @@ export default function Home(props: PageProps<PrinterQueue>) {
               <div>
                 <PrintButtons />
                 {props.data.items.map((str) => (
-                  <div className="rounded-full h-64 w-64 bg-gray-300">
+                  <div
+                    className="rounded-full h-64 w-64 bg-gray-300"
+                    style="transform: scaleY(-1);"
+                  >
                     <svg viewBox="0 0 100 100">
                       <path
                         d={str}
-                        stroke-width={3 * SIZE / 100}
+                        stroke-width={4 * SIZE / 100}
                         stroke-linecap="round"
                         style={{ fill: "none", stroke: "black" }}
                       >

@@ -1,11 +1,11 @@
 import { SIZE } from "./Drawing.tsx";
-import { heart } from "./heart.ts";
+import { heart } from "../scripts/heart.ts";
 
 const presets = [
   heart,
 ];
 
-export const Presets = () => {
+export default function Presets() {
     const handleUpload = (stroke: string) => {
       // code to handle uploading the strokes
       fetch("/api/add", {
