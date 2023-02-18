@@ -164,16 +164,16 @@ export async function findPathFromImage(params: ImagePathOptions) {
     const scaling = options.finalSize / options.resolution;
 
     for (const points of sortedSubClusters) {
-        path += `M ${points[0][0]} ${points[0][1]} `;
+        path += `M ${Math.round(options.offset + points[0][0] * scaling)} ${Math.round(options.offset + points[0][1] * scaling)} `;
         for (let j = 0; j < points.length; j++) {
             const point = points[j];
             if (j > 0 && point[0] === points[j-1][0] && point[1] === points[j-1][1]) {
                 continue;
             }
             if (j > 0 && Math.abs(points[j-1][1] - point[1]) <= 2) {
-                path += `L ${options.offset + point[0] * scaling} ${options.offset + point[1] * scaling} `;
+                path += `L ${Math.round(options.offset + point[0] * scaling)} ${Math.round(options.offset + point[1] * scaling)} `;
             } else {
-                path += `M ${options.offset + point[0] * scaling} ${options.offset + point[1] * scaling} `;
+                path += `M ${Math.round(options.offset + point[0] * scaling)} ${Math.round(options.offset + point[1] * scaling)} `;
             }
         }
     }
