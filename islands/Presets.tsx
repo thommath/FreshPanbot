@@ -23,7 +23,7 @@ export const Presets = () => {
                 <svg viewBox="0 0 100 100">
                   <path
                     d={str}
-                    stroke-width={4 * SIZE / 100}
+                    stroke-width={5 * SIZE / 100}
                     stroke-linecap="round"
                     style={{ fill: "none", stroke: "black" }}
                   >
