@@ -157,7 +157,7 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
-        stroke-width={5 * SIZE / 100}
+        stroke-width={5 * DRAWING_SIZE / 100}
         stroke-linecap="round"
         style={{ fill: "none", stroke: "black" }}
       />
@@ -169,7 +169,7 @@ export default function DrawingComponent() {
       <div className="relative rounded-full h-64 w-64 bg-gray-300">
         <svg
           className="absolute top-0 left-0 h-full w-full"
-          viewBox={`0 0 ${SIZE / 2} ${SIZE / 2}`}
+          viewBox={`0 0 ${DRAWING_SIZE} ${DRAWING_SIZE}`}
         >
           {strokeSVG}
         </svg>
