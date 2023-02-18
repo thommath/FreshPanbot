@@ -1,5 +1,6 @@
 import { Head, asset } from "$fresh/runtime.ts";
 import Header from "../components/Header.tsx";
+import { Presets } from "../islands/Presets.tsx";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       <div class="p-4 mx-auto max-w-screen-md flex flex-col align-top w-full min-h-full">
         <Header selectedTab={0} />
         <div class="bg-yellow-100 flex-grow-1">
-          No presets added yet
+          <Presets />
         </div>
       </div>
     </>
