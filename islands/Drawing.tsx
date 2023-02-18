@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 type Stroke = { x: number; y: number }[];
 
 export const SIZE = 100;
+export const DRAWING_SIZE = 50;
 
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -39,8 +40,8 @@ export default function DrawingComponent() {
     const canvasHeight = boundingBox.height;
     const movedX = x - boundingBox.left;
     const movedY = y - boundingBox.top;
-    const normalizedX = Math.round((movedX / canvasWidth) * SIZE);
-    const normalizedY = Math.round((movedY / canvasHeight) * SIZE);
+    const normalizedX = Math.round((movedX / canvasWidth) * DRAWING_SIZE);
+    const normalizedY = Math.round((movedY / canvasHeight) * DRAWING_SIZE);
     return { x: normalizedX, y: normalizedY };
   };
 
@@ -105,11 +106,16 @@ export default function DrawingComponent() {
         }
         return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
     });
-}
+  }
+
+  const convertToServerSize = (s: Stroke) => {
+    const scale = (n: number) => Math.round(n * (SIZE / DRAWING_SIZE));
+    return s.map((v) => ({x: scale(v.x), y: scale(v.y)}));
+  }
 
   const handleUpload = () => {
     // code to handle uploading the strokes
-    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "") + " Z";
+    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)), "") + " Z";
     fetch("/api/add", {
       body: path,
       method: "POST",
@@ -117,7 +123,7 @@ export default function DrawingComponent() {
   };
   const handleSetUpload = () => {
     // code to handle uploading the strokes
-    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(cur), "") + " Z";
+    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)), "") + " Z";
     fetch("/api/set", {
       body: path,
       method: "POST",
