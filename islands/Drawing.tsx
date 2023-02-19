@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 type Stroke = { x: number; y: number }[];
 
-export const SIZE = 100;
+export const SIZE = 120;
 export const DRAWING_SIZE = 50;
 
 export default function DrawingComponent() {
@@ -157,7 +157,7 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
-        stroke-width={4 * DRAWING_SIZE / 100}
+        stroke-width={6 * DRAWING_SIZE / SIZE}
         stroke-linecap="round"
         style={{ fill: "none", stroke: "black" }}
       />
