@@ -27,7 +27,7 @@ export default function ImageHandler() {
     maxEdgeOverlap: 0.3,
     minimumNeighbours: 5,
     neighbourDistance: 2,
-    resolution: 50,
+    resolution: 20,
     finalSize: (SIZE / 2) * Math.sqrt(2),
     offset: (SIZE - (SIZE / 2) * Math.sqrt(2))/2,
   });
@@ -204,8 +204,8 @@ export default function ImageHandler() {
                 id="resolution"
                 type="range"
                 min={10}
-                max={100}
-                step={5}
+                max={30}
+                step={2}
                 value={options.resolution}
                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                 onChange={(el) =>
