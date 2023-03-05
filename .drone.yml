@@ -8,8 +8,8 @@ steps:
   - name: docker_sock
     path: /var/run
   commands:
-  - docker build --build-arg GIT_REVISION=${DRONE_COMMIT_SHA:0:7} . -t localhost:32000/freshpanbot:latest -t localhost:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
-  - docker push localhost:32000/freshpanbot
+  - docker build --build-arg GIT_REVISION=${DRONE_COMMIT_SHA:0:7} . -t 10.8.0.14:32000/freshpanbot:latest -t 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
+  - docker push 10.8.0.14:32000/freshpanbot
 
 - name: deliver
   image: sinlead/drone-kubectl
