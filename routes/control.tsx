@@ -36,7 +36,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
                   >
                     <svg
                       style="transform: scaleY(-1);"
-                      viewBox={`0 0 ${DRAWING_SIZE} ${DRAWING_SIZE}`}
+                      viewBox={`0 0 ${SIZE} ${SIZE}`}
                     >
                       <path
                         d={str}

@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "preact/hooks";
 
 type Stroke = { x: number; y: number }[];
 
-export const SIZE = 120*10;
-export const DRAWING_SIZE = 50*10;
+export const SIZE = 120*2;
+export const DRAWING_SIZE = 50*2;
 
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
