@@ -157,7 +157,7 @@ export default function DrawingComponent() {
       <path
         key={index}
         d={strokeToPath(stroke)}
-        stroke-width={6 * DRAWING_SIZE / SIZE}
+        stroke-width={3 * DRAWING_SIZE / 50}
         stroke-linecap="round"
         style={{ fill: "none", stroke: "black" }}
       />
