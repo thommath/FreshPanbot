@@ -40,7 +40,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
                     >
                       <path
                         d={str}
-                        stroke-width={15 * SIZE / DRAWING_SIZE}
+                        stroke-width={SIZE / 25}
                         stroke-linecap="round"
                         style={{ fill: "none", stroke: "black" }}
                       >
