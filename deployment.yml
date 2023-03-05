@@ -20,7 +20,7 @@ spec:
   selector:
     matchLabels:
       name: freshpanbot-app
-  replicas: 3
+  replicas: 1
   revisionHistoryLimit: 1
   template:
     metadata:
