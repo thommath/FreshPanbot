@@ -27,7 +27,7 @@ export default function ImageHandler() {
     maxEdgeOverlap: 0.3,
     minimumNeighbours: 5,
     neighbourDistance: 2,
-    resolution: 20,
+    resolution: 22,
     finalSize: (SIZE / 2) * Math.sqrt(2),
     offset: (SIZE - (SIZE / 2) * Math.sqrt(2))/2,
   });
