@@ -9,11 +9,10 @@ steps:
     path: /var/run
   commands:
   - docker build --build-arg GIT_REVISION=${DRONE_COMMIT_SHA:0:7} . -t 10.8.0.14:32000/freshpanbot:latest -t 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
-  - docker push 10.8.0.14:32000/freshpanbot
+  - docker push 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
 
 - name: deliver
   image: sinlead/drone-kubectl
-  network_mode: "host"
   settings:
     kubernetes_server:
       from_secret: k8s_server
@@ -23,7 +22,7 @@ steps:
       from_secret: k8s_token
   commands:
     - kubectl apply -f deployment.yml
-    - kubectl rollout restart -n freshpanbot deployment freshpanbot-app
+    - kubectl set image -n freshpanbot deployment.v1.apps/freshpanbot-app 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
 
 volumes:
   - name: docker_sock
