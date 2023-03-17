@@ -5,6 +5,7 @@ import {
   ImagePathOptions,
 } from "../scripts/imageToCommands.ts";
 import { SIZE } from "./Drawing.tsx";
+import Preview from "./Preview.tsx";
 
 declare namespace JSX {
   interface IntrinsicElements {
@@ -27,9 +28,9 @@ export default function ImageHandler() {
     maxEdgeOverlap: 0.3,
     minimumNeighbours: 5,
     neighbourDistance: 2,
-    resolution: 22,
-    finalSize: (SIZE / 2) * Math.sqrt(2),
-    offset: (SIZE - (SIZE / 2) * Math.sqrt(2))/2,
+    resolution: 24,
+    finalSize: SIZE*0.8,//(SIZE / 2) * Math.sqrt(2),
+    offset: SIZE*0.1,//(SIZE - (SIZE / 2) * Math.sqrt(2)) / 2,
   });
   const [viewOptions, setViewOptions] = useState({
     animate: false,
@@ -50,7 +51,7 @@ export default function ImageHandler() {
     if (!result) {
       return;
     }
-    setViewOptions(options => ({...options, uploading: true}));
+    setViewOptions((options) => ({ ...options, uploading: true }));
     fetch("/api/add", {
       body: result.path,
       method: "POST",
@@ -72,16 +73,15 @@ export default function ImageHandler() {
       {result && (
         <div>
           <img class="w-6/12 inline-block" src={imageData.data} alt="" />
-          <img class="w-6/12 inline-block" src={result.clusterImage} alt="" />
+          <img class="w-6/12 inline-block" src={result.intensityImage} alt="" />
           <div
-            style="width: 500px; height: 500px; position: relative;"
-            class="m-auto"
+            class="w-full"
           >
-            <img
-              class="w-full absolute left-0 top-0"
-              src={result.intensityImage}
-              alt=""
+            <Preview
+              strokeSVG={result.path}
+              svgSize={SIZE}
             />
+
             {viewOptions.animate &&
               (
                 <svg
@@ -253,28 +253,30 @@ export default function ImageHandler() {
               disabled={viewOptions.uploading}
               onClick={uploadToPrinter}
             >
-              {viewOptions.uploading && <svg
-                class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
+              {viewOptions.uploading && (
+                <svg
+                  class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
                 >
-                </circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                >
-                </path>
-              </svg>}
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  >
+                  </circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  >
+                  </path>
+                </svg>
+              )}
               Upload to printer
             </button>
           </div>

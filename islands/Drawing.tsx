@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import Preview from "./Preview.tsx";
 
 type Stroke = { x: number; y: number }[];
 
-export const SIZE = 120*11;
-export const DRAWING_SIZE = 50*11;
+export const SIZE = 120 * 11;
+export const DRAWING_SIZE = 50 * 11;
 
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -38,11 +39,18 @@ export default function DrawingComponent() {
       .getBoundingClientRect();
     const canvasWidth = boundingBox.width;
     const canvasHeight = boundingBox.height;
+    const aspectRatio = canvasWidth / canvasHeight;
     const movedX = x - boundingBox.left;
     const movedY = y - boundingBox.top;
     const normalizedX = Math.round((movedX / canvasWidth) * DRAWING_SIZE);
-    const normalizedY = Math.round((movedY / canvasHeight) * DRAWING_SIZE);
-    return { x: normalizedX, y: DRAWING_SIZE-normalizedY };
+    const normalizedY = Math.round(
+      (1-(movedY / canvasHeight)) * (DRAWING_SIZE / aspectRatio),
+    );
+    console.log(
+      DRAWING_SIZE,
+      DRAWING_SIZE / aspectRatio,
+    )
+    return { x: normalizedX, y: normalizedY };
   };
 
   const handleMouseDown = (e: MouseEvent) => {
@@ -89,43 +97,45 @@ export default function DrawingComponent() {
 
   const handleMouseUp = () => {
     setIsDrawing(false);
-    setStrokes((prevStrokes) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
+    setStrokes((
+      prevStrokes,
+    ) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
     setCurrentStroke([]);
   };
 
   const handleTouchEnd = () => {
     setIsDrawing(false);
-    setStrokes((prevStrokes) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
+    setStrokes((
+      prevStrokes,
+    ) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
     setCurrentStroke([]);
   };
 
   function removeRepeatedPoints(stroke: Stroke) {
     return stroke.filter((point, index) => {
-        if (index === 0) {
-            return true;
-        }
-        return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
+      if (index === 0) {
+        return true;
+      }
+      return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
     });
   }
 
   const convertToServerSize = (s: Stroke) => {
     const scale = (n: number) => Math.round(n * (SIZE / DRAWING_SIZE));
-    return s.map((v) => ({x: scale(v.x), y: scale(v.y)}));
-  }
+    return s.map((v) => ({ x: scale(v.x), y: scale(v.y) }));
+  };
+
+  const convertStrokesToServerPath = (listOfStokes: Stroke[]) => {
+    return listOfStokes.reduce(
+      (acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)),
+      "",
+    ) + " Z";
+  };
 
   const handleUpload = () => {
     // code to handle uploading the strokes
-    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)), "") + " Z";
     fetch("/api/add", {
-      body: path,
-      method: "POST",
-    }).then(handleDiscard);
-  };
-  const handleSetUpload = () => {
-    // code to handle uploading the strokes
-    const path = strokes.reduce((acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)), "") + " Z";
-    fetch("/api/set", {
-      body: path,
+      body: convertStrokesToServerPath(strokes),
       method: "POST",
     }).then(handleDiscard);
   };
@@ -152,36 +162,18 @@ export default function DrawingComponent() {
     return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
   };
 
-  const strokeSVG = [...strokes, currentStroke].map((stroke, index) => {
-    return (
-      <path
-        key={index}
-        d={strokeToPath(stroke)}
-        stroke-width={DRAWING_SIZE / 25}
-        stroke-linecap="round"
-        style={{ fill: "none", stroke: "black" }}
-      />
-    );
-  });
-
   return (
-    <div class="flex gap-2 w-full flex-col">
-      <div className="relative rounded-full h-64 w-64 bg-gray-300">
-        <svg
-          className="absolute top-0 left-0 h-full w-full"
-          style="transform: scaleY(-1);"
-          viewBox={`0 0 ${DRAWING_SIZE} ${DRAWING_SIZE}`}
-        >
-          {strokeSVG}
-        </svg>
-        <div
-          className="absolute top-0 left-0 h-full w-full"
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          ref={canvasRef}
-        >
-        </div>
-      </div>
+    <div class="flex gap-2 w-full flex-col items-center">
+      <Preview
+        strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
+        svgSize={SIZE}
+        callbacks={{
+          handleMouseDown,
+          handleTouchStart,
+        }}
+        canvasRef={canvasRef}
+      />
+
       <div className="">
         <button
           className="bg-blue-500 px-3 py-2 rounded-lg text-white"
@@ -189,13 +181,6 @@ export default function DrawingComponent() {
           disabled={strokes.length === 0}
         >
           Upload
-        </button>
-        <button
-          className="bg-blue-500 px-3 py-2 rounded-lg text-white"
-          onClick={handleSetUpload}
-          disabled={strokes.length === 0}
-        >
-          Upload (clear queue)
         </button>
         <button
           className="bg-blue-500 px-3 py-2 rounded-lg text-white"

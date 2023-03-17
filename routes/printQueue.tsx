@@ -2,6 +2,7 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
 import { SIZE } from "../islands/Drawing.tsx";
+import Preview from "../islands/Preview.tsx";
 import PrintButtons from "../islands/printButtons.tsx";
 import { redis, REDIS_HISTORY_KEY, REDIS_QUEUE_KEY } from "./api/redis.ts";
 
@@ -49,20 +50,10 @@ export default function Home(props: PageProps<PrinterQueue>) {
               <div>
                 <PrintButtons />
                 {props.data.items.map((str) => (
-                  <div className="rounded-full h-64 w-64 bg-gray-300">
-                    <svg
-                      style="transform: scaleY(-1);"
-                      viewBox={`0 0 ${SIZE} ${SIZE}`}
-                    >
-                      <path
-                        d={str}
-                        stroke-width={SIZE / 25}
-                        stroke-linecap="round"
-                        style={{ fill: "none", stroke: "black" }}
-                      >
-                      </path>
-                    </svg>
-                  </div>
+                  <Preview
+                    strokeSVG={str}
+                    svgSize={SIZE}
+                  />
                 ))}
               </div>
             )}
