@@ -5,7 +5,7 @@ export const REDIS_QUEUE_KEY = "panbot-queue";
 export const REDIS_HISTORY_KEY = "panbot-history";
 export const REDIS_TO_PRINT_KEY = "panbot-item-to-print";
 
-export const redis: Promise<Redis> = connect({
+export const redis: Promise<Redis> = {get: async () => "", lrange: async () => []} as any; /* connect({
     hostname: "redis.redis.svc.cluster.local",
     port: 6379,
 });
