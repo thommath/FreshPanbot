@@ -29,22 +29,12 @@ export default function Home(props: PageProps<PrinterQueue>) {
       <div class="p-4 mx-auto max-w-screen-md flex flex-col align-top w-full min-h-full">
         <Header selectedTab={3} />
         <div class="bg-yellow-100 flex-grow-1">
-          <h6>Last print</h6>
-          <div className="rounded-full h-64 w-64 bg-gray-300">
-            <svg
-              style="transform: scaleY(-1);"
-              viewBox={`0 0 ${SIZE} ${SIZE}`}
-            >
-              <path
-                d={props.data.history[0]}
-                stroke-width={SIZE / 25}
-                stroke-linecap="round"
-                style={{ fill: "none", stroke: "black" }}
-              >
-              </path>
-            </svg>
-          </div>
-          <h6>Printer queue</h6>
+          <h3>Last print</h3>
+          <Preview
+            strokeSVG={props.data.history[0]}
+            svgSize={SIZE}
+          />
+          <h3>Printer queue</h3>
           {props.data.items.length &&
             (
               <div>

@@ -1,12 +1,12 @@
 import { SIZE } from "./Drawing.tsx";
-import { heart } from "../scripts/heart.ts";
 import Preview from "./Preview.tsx";
+import { Preset } from "../routes/index.tsx";
 
-const presets = [
-  heart,
-];
+export type PresetsProps = {
+  presets: Preset[];
+};
 
-export default function Presets() {
+export default function Presets(props: PresetsProps) {
   const handleUpload = (stroke: string) => {
     // code to handle uploading the strokes
     fetch("/api/add", {
@@ -14,19 +14,31 @@ export default function Presets() {
       method: "POST",
     });
   };
+  const deletePreset = (id: string) => {
+    // code to handle uploading the strokes
+    fetch("/api/deletePreset", {
+      body: id,
+      method: "POST",
+    });
+  };
   return (
     <>
-      {presets.length &&
+      {props.presets.length &&
         (
           <div>
-            {presets.map((str) => (
-              <div
-                onClick={() => handleUpload(str)}
-              >
-                <Preview
-                  strokeSVG={str}
-                  svgSize={SIZE}
-                />
+            {props.presets.map((preset) => (
+              <div>
+                <div
+                  onClick={() => handleUpload(preset.path)}
+                >
+                  <Preview
+                    strokeSVG={preset.path}
+                    svgSize={SIZE}
+                  />
+                </div>
+                <button onClick={() => deletePreset(preset.id)}>
+                  Delete preset
+                </button>
               </div>
             ))}
           </div>

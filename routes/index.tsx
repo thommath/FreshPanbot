@@ -1,8 +1,28 @@
-import { Head, asset } from "$fresh/runtime.ts";
+import { asset, Head } from "$fresh/runtime.ts";
+import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
 import Presets from "../islands/Presets.tsx";
+import { redis, REDIS_PRESET_KEY } from "./api/redis.ts";
 
-export default function Home() {
+export type Preset = {
+  id: string;
+  path: string;
+};
+
+interface PresetsData {
+  presets: { [id: string]: Preset };
+}
+
+export const handler: Handlers<PresetsData> = {
+  async GET(_req, ctx) {
+    const presets = JSON.parse(
+      await (await redis).get(REDIS_PRESET_KEY) || "{}",
+    );
+    return ctx.render({ presets });
+  },
+};
+
+export default function Home(props: PageProps<PresetsData>) {
   return (
     <>
       <Head>
@@ -12,9 +32,11 @@ export default function Home() {
       <div class="p-4 mx-auto max-w-screen-md flex flex-col align-top w-full min-h-full">
         <Header selectedTab={0} />
         <div class="bg-yellow-100 flex-grow-1">
-          <Presets />
+          <Presets presets={Object.values(props.data.presets)} />
         </div>
       </div>
     </>
   );
 }
+
+const presets = await (await redis).get(REDIS_PRESET_KEY) || {};

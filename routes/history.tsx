@@ -1,10 +1,10 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
+import AddPreset from "../islands/addPreset.tsx";
 import { SIZE } from "../islands/Drawing.tsx";
 import Preview from "../islands/Preview.tsx";
 import PrintThis from "../islands/printThis.tsx";
-import { heart } from "../scripts/heart.ts";
 import { redis, REDIS_HISTORY_KEY } from "./api/redis.ts";
 
 interface PrinterQueue {
@@ -38,6 +38,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
                       svgSize={SIZE}
                     />
                     <PrintThis str={str} />
+                    <AddPreset str={str} />
                   </div>
                 ))}
               </div>
