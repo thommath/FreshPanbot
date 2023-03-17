@@ -3,9 +3,8 @@ import { asset } from "$fresh/runtime.ts";
 export default function Header(props: { selectedTab: number }) {
   return (
     <>
-      <div class="inline-flex">
-        <img src={asset("logo.png")} alt="" width="6rem" />
-        <h1 class="text-4xl text-center pb-4">Panbot</h1>
+      <div class="inline-flex items-center bg-yellow-100 justify-center">
+        <img src={asset("logo.png")} alt="" class="h-64" />
       </div>
       <div class="flex justify-between">
         <a class="w-full" href="/">

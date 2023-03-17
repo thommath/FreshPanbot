@@ -29,10 +29,12 @@ export default function Home(props: PageProps<PresetsData>) {
         <title>Panbot</title>
         <link rel="stylesheet" href={asset("style.css")} />
       </Head>
-      <div class="p-4 mx-auto max-w-screen-lg flex flex-col align-top w-full min-h-full">
+      <div class="flex flex-col w-full min-h-full">
         <Header selectedTab={0} />
-        <div class="bg-yellow-100 flex-grow-1">
-          <Presets presets={Object.values(props.data.presets)} />
+        <div class="pt-8 bg-yellow-100 flex-grow-1 flex justify-center">
+          <div class="flex flex-col">
+            <Presets presets={Object.values(props.data.presets)} />
+          </div>
         </div>
       </div>
     </>

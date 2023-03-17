@@ -26,28 +26,30 @@ export default function Home(props: PageProps<PrinterQueue>) {
         <title>Panbot</title>
         <link rel="stylesheet" href={asset("style.css")} />
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md flex flex-col align-top w-full min-h-full">
+      <div class="flex flex-col w-full min-h-full">
         <Header selectedTab={3} />
-        <div class="bg-yellow-100 flex-grow-1">
-          <h3>Last print</h3>
-          <Preview
-            strokeSVG={props.data.history[0]}
-            svgSize={SIZE}
-          />
-          <h3>Printer queue</h3>
-          {props.data.items.length &&
-            (
-              <div>
-                <PrintButtons />
-                {props.data.items.map((str) => (
-                  <Preview
-                    strokeSVG={str}
-                    svgSize={SIZE}
-                  />
-                ))}
-              </div>
-            )}
-          {!props.data.items.length && <div>No items in the print queue</div>}
+        <div class="pt-8 bg-yellow-100 flex-grow-1 flex justify-center">
+          <div class="flex flex-col">
+            <h3 class="text-2xl">Last print</h3>
+            <Preview
+              strokeSVG={props.data.history[0] || ""}
+              svgSize={SIZE}
+            />
+            <h3 class="text-2xl">Printer queue</h3>
+            {props.data.items.length !== 0 &&
+              (
+                <div>
+                  <PrintButtons />
+                  {props.data.items.map((str) => (
+                    <Preview
+                      strokeSVG={str}
+                      svgSize={SIZE}
+                    />
+                  ))}
+                </div>
+              )}
+            {!props.data.items.length && <div>No items in the print queue</div>}
+          </div>
         </div>
       </div>
     </>

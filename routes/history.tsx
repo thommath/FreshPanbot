@@ -25,25 +25,27 @@ export default function Home(props: PageProps<PrinterQueue>) {
         <title>Panbot</title>
         <link rel="stylesheet" href={asset("style.css")} />
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md flex flex-col align-top w-full min-h-full">
+      <div class="flex flex-col w-full min-h-full">
         <Header selectedTab={3} />
-        <div class="bg-yellow-100 flex-grow-1">
-          {props.data.items.length &&
-            (
-              <div>
-                {props.data.items.map((str) => (
-                  <div>
-                    <Preview
-                      strokeSVG={str}
-                      svgSize={SIZE}
-                    />
-                    <PrintThis str={str} />
-                    <AddPreset str={str} />
-                  </div>
-                ))}
-              </div>
-            )}
-          {!props.data.items.length && <div>No items in the print queue</div>}
+        <div class="pt-8 bg-yellow-100 flex-grow-1 flex justify-center">
+          <div class="flex flex-col">
+            {props.data.items.length !== 0 &&
+              (
+                <div>
+                  {props.data.items.map((str) => (
+                    <div>
+                      <Preview
+                        strokeSVG={str}
+                        svgSize={SIZE}
+                      />
+                      <PrintThis str={str} />
+                      <AddPreset str={str} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            {!props.data.items.length && <div>No items in history</div>}
+          </div>
         </div>
       </div>
     </>

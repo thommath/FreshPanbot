@@ -9,9 +9,9 @@ export default function Home() {
         <title>Panbot</title>
         <link rel="stylesheet" href={asset("style.css")} />
       </Head>
-      <div class="p-4 mx-auto max-w-screen-md flex flex-col align-top w-full min-h-full">
+      <div class="flex flex-col w-full min-h-full">
         <Header selectedTab={2} />
-        <div class="bg-yellow-100 flex-grow-1">
+        <div class="pt-8 bg-yellow-100 flex-grow-1">
           <DrawingComponent />
         </div>
       </div>

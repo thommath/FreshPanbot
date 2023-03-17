@@ -27,7 +27,7 @@ export default function Presets(props: PresetsProps) {
   };
   return (
     <>
-      {props.presets.length &&
+      {props.presets.length !== 0 &&
         (
           <div>
             {props.presets.map((preset) => (
@@ -47,6 +47,9 @@ export default function Presets(props: PresetsProps) {
             ))}
           </div>
         )}
+        {props.presets.length === 0 && <div>No presets set</div>
+
+        }
     </>
   );
 }
