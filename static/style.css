@@ -4,3 +4,12 @@ html, body {
     width: 100%;
     height: 100%;
 }
+
+@font-face {
+    font-family: 'Shantell_Sans';
+    src: url('./Shantell_Sans/ShantellSans-VariableFont_BNCE\,INFM\,SPAC\,wght.ttf')  format('truetype'); /* Safari, Android, iOS */
+}
+
+h1 {
+    font-family: "Shantell_Sans";
+}
