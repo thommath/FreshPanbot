@@ -3,7 +3,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
 import { SIZE } from "../islands/Drawing.tsx";
 import PrintButtons from "../islands/printButtons.tsx";
-import { redis, REDIS_QUEUE_KEY, REDIS_TO_PRINT_KEY } from "./api/redis.ts";
+import { redis, REDIS_HISTORY_KEY, REDIS_QUEUE_KEY } from "./api/redis.ts";
 
 interface PrinterQueue {
   history: string[];
@@ -12,7 +12,7 @@ interface PrinterQueue {
 
 export const handler: Handlers<PrinterQueue> = {
   async GET(_req, ctx) {
-    const history = await (await redis).lrange(REDIS_TO_PRINT_KEY, 0, 1);
+    const history = await (await redis).lrange(REDIS_HISTORY_KEY, 0, 1);
     const items = await (await redis).lrange(REDIS_QUEUE_KEY, 0, 100);
     return ctx.render({ history, items });
   },

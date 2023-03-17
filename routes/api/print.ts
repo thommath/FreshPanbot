@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { redis, REDIS_QUEUE_KEY, REDIS_TO_PRINT_KEY } from "./redis.ts";
+import { redis, REDIS_HISTORY_KEY, REDIS_QUEUE_KEY, REDIS_TO_PRINT_KEY } from "./redis.ts";
 
 export const handler: Handlers = {
   async POST() {
@@ -10,7 +10,7 @@ export const handler: Handlers = {
     const printString = toPrint.toString();
 
     // Save it in history
-    (await redis).rpush(REDIS_QUEUE_KEY, printString);
+    (await redis).lpush(REDIS_HISTORY_KEY, printString);
 
     // Send to print queue
     await (await redis).lpush(REDIS_TO_PRINT_KEY, printString);
