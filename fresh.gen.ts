@@ -16,14 +16,13 @@ import * as $9 from "./routes/history.tsx";
 import * as $10 from "./routes/image.tsx";
 import * as $11 from "./routes/index.tsx";
 import * as $12 from "./routes/printQueue.tsx";
-import * as $$0 from "./islands/Counter.tsx";
-import * as $$1 from "./islands/Drawing.tsx";
-import * as $$2 from "./islands/ImageHandler.tsx";
-import * as $$3 from "./islands/Presets.tsx";
-import * as $$4 from "./islands/Preview.tsx";
-import * as $$5 from "./islands/addPreset.tsx";
-import * as $$6 from "./islands/printButtons.tsx";
-import * as $$7 from "./islands/printThis.tsx";
+import * as $$0 from "./islands/Drawing.tsx";
+import * as $$1 from "./islands/ImageHandler.tsx";
+import * as $$2 from "./islands/Presets.tsx";
+import * as $$3 from "./islands/Preview.tsx";
+import * as $$4 from "./islands/addPreset.tsx";
+import * as $$5 from "./islands/printButtons.tsx";
+import * as $$6 from "./islands/printThis.tsx";
 
 const manifest = {
   routes: {
@@ -42,14 +41,13 @@ const manifest = {
     "./routes/printQueue.tsx": $12,
   },
   islands: {
-    "./islands/Counter.tsx": $$0,
-    "./islands/Drawing.tsx": $$1,
-    "./islands/ImageHandler.tsx": $$2,
-    "./islands/Presets.tsx": $$3,
-    "./islands/Preview.tsx": $$4,
-    "./islands/addPreset.tsx": $$5,
-    "./islands/printButtons.tsx": $$6,
-    "./islands/printThis.tsx": $$7,
+    "./islands/Drawing.tsx": $$0,
+    "./islands/ImageHandler.tsx": $$1,
+    "./islands/Presets.tsx": $$2,
+    "./islands/Preview.tsx": $$3,
+    "./islands/addPreset.tsx": $$4,
+    "./islands/printButtons.tsx": $$5,
+    "./islands/printThis.tsx": $$6,
   },
   baseUrl: import.meta.url,
   config,

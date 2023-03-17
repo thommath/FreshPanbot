@@ -137,7 +137,9 @@ export default function DrawingComponent() {
     fetch("/api/add", {
       body: convertStrokesToServerPath(strokes),
       method: "POST",
-    }).then(handleDiscard);
+    }).then(
+      () => window.location.href = "/printQueue"
+    );
   };
 
   const handleUndo = () => {

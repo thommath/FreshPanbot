@@ -12,14 +12,18 @@ export default function Presets(props: PresetsProps) {
     fetch("/api/add", {
       body: stroke,
       method: "POST",
-    });
+    }).then(
+      () => window.location.href = "/printQueue"
+    );
   };
   const deletePreset = (id: string) => {
     // code to handle uploading the strokes
     fetch("/api/deletePreset", {
       body: id,
       method: "POST",
-    });
+    }).then(
+      () => window.location.href = "/"
+    );
   };
   return (
     <>
