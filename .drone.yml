@@ -11,18 +11,19 @@ steps:
   - docker build --build-arg GIT_REVISION=${DRONE_COMMIT_SHA:0:7} . -t 10.8.0.14:32000/freshpanbot:latest -t 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
   - docker push 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
 
-- name: deliver
-  image: sinlead/drone-kubectl
-  settings:
-    kubernetes_server:
-      from_secret: k8s_server
-    kubernetes_cert:
-      from_secret: k8s_cert
-    kubernetes_token:
-      from_secret: k8s_token
+
+- name: update manifest repo
+  image: alpine/git
   commands:
-    - kubectl apply -f deployment.yml
-    - kubectl set image -n freshpanbot deployment.v1.apps/freshpanbot-app panbot-app=10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
+    - git clone https://github.com/thommath/Homeserver-CD.git
+    - cd Homeserver-CD
+
+    - wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O yq
+    - chmod +x yq
+    - ./yq e -i '.spec.template.spec.containers[0].image |= "10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}"' 'freshpanbot/deployment.yaml'
+    - git add freshpanbot/deployment.yaml
+    - git commit -m "Bump freshpanbot backend and worker to ${DRONE_COMMIT_SHA:0:7}"
+    - git push
 
 volumes:
   - name: docker_sock
