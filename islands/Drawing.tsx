@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "preact/hooks";
-import Preview from "./Preview.tsx";
+import { useState } from "preact/hooks";
+import TouchContainer from "./TouchContainer.tsx";
 
 type Stroke = { x: number; y: number }[];
 
@@ -12,29 +12,14 @@ export default function DrawingComponent() {
   const [strokes, setStrokes] = useState<Stroke[]>([]);
   const [undoStack, setUndoStack] = useState<Stroke[]>([]);
   const [redoStack, setRedoStack] = useState<Stroke[]>([]);
-  const canvasRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (isDrawing) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("touchmove", handleTouchMove);
-      window.addEventListener("mouseup", handleMouseUp);
-      window.addEventListener("touchend", handleTouchEnd);
-    } else {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchend", handleTouchEnd);
+
+  const normalizeInput = ({ x, y, aspectRatio }: { x: number; y: number, aspectRatio: number }) => {
+    return {
+      x: Math.round(x * DRAWING_SIZE / 100),
+      y: Math.round(y * DRAWING_SIZE / (100 * aspectRatio)),
     }
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [isDrawing, currentStroke]);
-
-  const normalizeInput = ({ x, y }: { x: number; y: number }) => {
+    /*
     const boundingBox = (canvasRef.current as HTMLDivElement)
       .getBoundingClientRect();
     const canvasWidth = boundingBox.width;
@@ -46,67 +31,28 @@ export default function DrawingComponent() {
     const normalizedY = Math.round(
       (1-(movedY / canvasHeight)) * (DRAWING_SIZE / aspectRatio),
     );
-    console.log(
-      DRAWING_SIZE,
-      DRAWING_SIZE / aspectRatio,
-    )
     return { x: normalizedX, y: normalizedY };
+    */
   };
 
-  const handleMouseDown = (e: MouseEvent) => {
+  const handleMouseDown = (point: {x: number, y: number}) => {
     setIsDrawing(true);
-    e.stopPropagation();
-    e.preventDefault();
-    setCurrentStroke([normalizeInput({ x: e.clientX, y: e.clientY })]);
+    setCurrentStroke([normalizeInput(point)]);
   };
 
-  const handleTouchStart = (e: TouchEvent) => {
-    setIsDrawing(true);
-    e.stopPropagation();
-    e.preventDefault();
-    setCurrentStroke([
-      normalizeInput({ x: e.touches[0].clientX, y: e.touches[0].clientY }),
-    ]);
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = (point: {x: number, y: number}) => {
     if (!isDrawing) return;
-    e.stopPropagation();
-    e.preventDefault();
     setCurrentStroke(
       (
-        prevStroke,
-      ) => [...prevStroke, normalizeInput({ x: e.clientX, y: e.clientY })],
-    );
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDrawing) return;
-    e.stopPropagation();
-    e.preventDefault();
-    setCurrentStroke(
-      (prevStroke) => [
-        ...prevStroke,
-        normalizeInput({
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY,
-        }),
-      ],
+        prevStroke: Stroke[],
+      ) => [...prevStroke, normalizeInput(point)],
     );
   };
 
   const handleMouseUp = () => {
     setIsDrawing(false);
     setStrokes((
-      prevStrokes,
-    ) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
-    setCurrentStroke([]);
-  };
-
-  const handleTouchEnd = () => {
-    setIsDrawing(false);
-    setStrokes((
-      prevStrokes,
+      prevStrokes: Stroke[],
     ) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
     setCurrentStroke([]);
   };
@@ -166,19 +112,18 @@ export default function DrawingComponent() {
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
-      <Preview
+      <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
         svgSize={SIZE}
-        callbacks={{
-          handleMouseDown,
-          handleTouchStart,
-        }}
-        canvasRef={canvasRef}
+        interactive={true}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
       />
 
       <div className="">
         <button
-          className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+          className="bg-green-500 px-3 py-2 rounded-lg text-white"
           onClick={handleUpload}
           disabled={strokes.length === 0}
         >

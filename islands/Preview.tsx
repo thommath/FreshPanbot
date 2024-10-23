@@ -5,6 +5,10 @@ export type PreviewProps = {
   callbacks?: {
     handleMouseDown: any;
     handleTouchStart: any;
+    handleTouchEnd: any;
+    handleMouseMove: any;
+    handleMouseUp: any;
+    handleTouchMove: any;
   };
   canvasRef?: any;
 };
@@ -38,8 +42,12 @@ export default function Preview(props: PreviewProps) {
         {props.canvasRef && props.callbacks && (
           <div
             className="absolute top-0 left-0 h-full w-full"
+            onMouseMove={props.callbacks.handleMouseMove}
             onMouseDown={props.callbacks.handleMouseDown}
+            onMouseUp={props.callbacks.handleMouseUp}
+            onTouchMove={props.callbacks.handleTouchMove}
             onTouchStart={props.callbacks.handleTouchStart}
+            onTouchEnd={props.callbacks.handleTouchEnd}
             ref={props.canvasRef}
           >
           </div>

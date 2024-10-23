@@ -16,7 +16,8 @@ interface PresetsData {
 export const handler: Handlers<PresetsData> = {
   async GET(_req, ctx) {
     const presets = JSON.parse(
-      await (await redis).get(REDIS_PRESET_KEY) || "{}",
+      //await (await redis).get(REDIS_PRESET_KEY) || "{}",
+      "{}",
     );
     return ctx.render({ presets });
   },
@@ -41,4 +42,4 @@ export default function Home(props: PageProps<PresetsData>) {
   );
 }
 
-const presets = await (await redis).get(REDIS_PRESET_KEY) || {};
+//const presets = await (await redis).get(REDIS_PRESET_KEY) || {};

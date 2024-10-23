@@ -19,6 +19,7 @@ import * as $Drawing from "./islands/Drawing.tsx";
 import * as $ImageHandler from "./islands/ImageHandler.tsx";
 import * as $Presets from "./islands/Presets.tsx";
 import * as $Preview from "./islands/Preview.tsx";
+import * as $TouchContainer from "./islands/TouchContainer.tsx";
 import * as $addPreset from "./islands/addPreset.tsx";
 import * as $printButtons from "./islands/printButtons.tsx";
 import * as $printThis from "./islands/printThis.tsx";
@@ -45,6 +46,7 @@ const manifest = {
     "./islands/ImageHandler.tsx": $ImageHandler,
     "./islands/Presets.tsx": $Presets,
     "./islands/Preview.tsx": $Preview,
+    "./islands/TouchContainer.tsx": $TouchContainer,
     "./islands/addPreset.tsx": $addPreset,
     "./islands/printButtons.tsx": $printButtons,
     "./islands/printThis.tsx": $printThis,
