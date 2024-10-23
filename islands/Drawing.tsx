@@ -51,9 +51,11 @@ export default function DrawingComponent() {
 
   const handleMouseUp = () => {
     setIsDrawing(false);
-    setStrokes((
-      prevStrokes: Stroke[],
-    ) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
+    if (currentStroke.length > 1) {
+      setStrokes((
+        prevStrokes: Stroke[],
+      ) => [...prevStrokes, removeRepeatedPoints(currentStroke)]);
+    }
     setCurrentStroke([]);
   };
 
