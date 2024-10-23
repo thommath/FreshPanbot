@@ -3,8 +3,9 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
 import AddPreset from "../islands/addPreset.tsx";
 import { SIZE } from "../islands/Drawing.tsx";
-import Preview from "../islands/Preview.tsx";
+
 import PrintThis from "../islands/printThis.tsx";
+import TouchContainer from "../islands/TouchContainer.tsx";
 import { redis, REDIS_HISTORY_KEY } from "./api/redis.ts";
 
 interface PrinterQueue {
@@ -34,7 +35,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
                 <div>
                   {props.data.items.map((str) => (
                     <div>
-                      <Preview
+                      <TouchContainer
                         strokeSVG={str}
                         svgSize={SIZE}
                       />

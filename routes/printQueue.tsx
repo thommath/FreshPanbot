@@ -2,8 +2,8 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../components/Header.tsx";
 import { SIZE } from "../islands/Drawing.tsx";
-import Preview from "../islands/Preview.tsx";
 import PrintButtons from "../islands/printButtons.tsx";
+import TouchContainer from "../islands/TouchContainer.tsx";
 import { redis, REDIS_HISTORY_KEY, REDIS_QUEUE_KEY } from "./api/redis.ts";
 
 interface PrinterQueue {
@@ -31,7 +31,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
         <div class="pt-8 bg-yellow-100 flex-grow-1 flex justify-center">
           <div class="flex flex-col">
             <h3 class="text-2xl">Last print</h3>
-            <Preview
+            <TouchContainer
               strokeSVG={props.data.history[0] || ""}
               svgSize={SIZE}
             />
@@ -41,7 +41,7 @@ export default function Home(props: PageProps<PrinterQueue>) {
                 <div>
                   <PrintButtons />
                   {props.data.items.map((str) => (
-                    <Preview
+                    <TouchContainer
                       strokeSVG={str}
                       svgSize={SIZE}
                     />

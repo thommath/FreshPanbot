@@ -5,7 +5,7 @@ import {
   ImagePathOptions,
 } from "../scripts/imageToCommands.ts";
 import { SIZE } from "./Drawing.tsx";
-import Preview from "./Preview.tsx";
+import TouchContainer from "./TouchContainer.tsx";
 
 declare namespace JSX {
   interface IntrinsicElements {
@@ -77,7 +77,7 @@ export default function ImageHandler() {
           <div
             class="w-full"
           >
-            <Preview
+            <TouchContainer
               strokeSVG={result.path}
               svgSize={SIZE}
             />

@@ -1,6 +1,6 @@
 import { SIZE } from "./Drawing.tsx";
-import Preview from "./Preview.tsx";
 import { Preset } from "../routes/index.tsx";
+import TouchContainer from "./TouchContainer.tsx";
 
 export type PresetsProps = {
   presets: Preset[];
@@ -35,7 +35,7 @@ export default function Presets(props: PresetsProps) {
                 <div
                   onClick={() => handleUpload(preset.path)}
                 >
-                  <Preview
+                  <TouchContainer
                     strokeSVG={preset.path}
                     svgSize={SIZE}
                   />
