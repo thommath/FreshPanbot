@@ -47,6 +47,7 @@ const TouchContainer = ({
   };
 
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    console.log("Touch move");
     const touch = e.touches[0];
     const mouseEvent = {
       ...e,
@@ -59,6 +60,7 @@ const TouchContainer = ({
   };
 
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    console.log("Touch start");
     const touch = e.touches[0];
     const mouseEvent = {
       ...e,
@@ -71,6 +73,7 @@ const TouchContainer = ({
   };
 
   const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    console.log("Touch end");
     handleMouseUp(e as any as MouseEvent<HTMLDivElement>);
   };
 
@@ -117,12 +120,9 @@ const TouchContainer = ({
         {containerRef && interactive && (
           <div
             className="absolute top-0 left-0 h-full w-full touch-none"
-            onMouseMove={handleMouseMove}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onTouchMove={handleTouchMove}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
+            onPointerDown={handleMouseDown}
+            onPointerMove={handleMouseMove}
+            onPointerUp={handleMouseUp}
             ref={containerRef}
             style={{
               touchAction: 'none'
