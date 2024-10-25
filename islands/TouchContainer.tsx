@@ -89,6 +89,8 @@ const TouchContainer = ({
     const yPercentage =
       ((containerRect.bottom - event.clientY) / containerRect.height) * 100;
 
+    console.log("Event: ", xPercentage, yPercentage)
+
     return { x: xPercentage, y: yPercentage, aspectRatio: containerRect.width / containerRect.height, timeStamp: event.timeStamp };
   };
 
