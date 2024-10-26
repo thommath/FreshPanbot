@@ -86,7 +86,7 @@ export default function DrawingComponent() {
   const handleUpload = () => {
     // code to handle uploading the strokes
     fetch("/api/add", {
-      body: convertStrokesToServerPath(strokes),
+      body: convertStrokesToServerPath([...strokes, currentStroke]),
       method: "POST",
     }).then(
       () => window.location.href = "/printQueue"
