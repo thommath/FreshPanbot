@@ -38,7 +38,7 @@ export default function DrawingComponent() {
   };
 
   const handleMouseDown = useCallback((point: { x: number, y: number }) => {
-    if (strokes.length + currentStroke.length > 150) {
+    if (strokes.length + currentStroke.length > 250) {
       setError("Maks lengde er møtt");
       return;
     }
@@ -49,7 +49,7 @@ export default function DrawingComponent() {
   const handleMouseMove = (point: { x: number, y: number }) => {
     if (!isDrawing) return;
 
-    if (strokes.length + currentStroke.length > 150) {
+    if (strokes.length + currentStroke.length > 250) {
       setError("Maks lengde er møtt");
       return;
     }
@@ -126,6 +126,9 @@ export default function DrawingComponent() {
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
+      {error && <div style={{ color: "red", fontWeight: "bold" }}>
+        {error}
+      </div>}
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
         svgSize={SIZE}
@@ -165,9 +168,6 @@ export default function DrawingComponent() {
           Redo
         </button>
       </div>
-      {error && <div style={{ color: "red", fontWeight: "bold" }}>
-        {error}
-      </div>}
     </div>
   );
 }
