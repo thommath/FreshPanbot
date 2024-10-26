@@ -128,8 +128,8 @@ export default function DrawingComponent() {
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
-      {error && <div style={{ color: "red", fontWeight: "bold" }}>
-        {error}
+      {maxLengthIsMet && <div style={{ color: "red", fontWeight: "bold" }}>
+        Nå kan du ikke lage en større tegning
       </div>}
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
