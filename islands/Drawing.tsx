@@ -38,21 +38,12 @@ export default function DrawingComponent() {
   };
 
   const handleMouseDown = useCallback((point: { x: number, y: number }) => {
-    if (strokes.length + currentStroke.length > 250) {
-      setError("Maks lengde er møtt");
-      return;
-    }
     setIsDrawing(true);
     setCurrentStroke([normalizeInput(point)]);
   }, [strokes, currentStroke]);
 
   const handleMouseMove = (point: { x: number, y: number }) => {
     if (!isDrawing) return;
-
-    if (strokes.length + currentStroke.length > 250) {
-      setError("Maks lengde er møtt");
-      return;
-    }
 
     setCurrentStroke(
       (
@@ -124,7 +115,7 @@ export default function DrawingComponent() {
     return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
   };
 
-  const maxLengthIsMet = strokes.length + currentStroke.length > 250;
+  const maxLengthIsMet = strokes.reduce((acc, cur) => acc + cur.length, 0) + currentStroke.length > 1000;
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
