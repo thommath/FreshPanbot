@@ -45,7 +45,7 @@ export default function DrawingComponent() {
   const handleMouseMove = (point: {x: number, y: number}) => {
     if (!isDrawing) return;
 
-    if (strokes.length + currentStroke.length > 250) {
+    if (strokes.length + currentStroke.length > 100) {
       setError("Maks lengde er møtt");
       return;
     }
