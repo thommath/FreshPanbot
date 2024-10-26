@@ -18,7 +18,6 @@ export const handler: Handlers = {
       counter++
     ) {
       text = await getText();
-      console.log(id, ": ", "polled ", text);
       await new Promise((res) => setTimeout(res, pull_interval));
     }
       console.log(id, ": ", "returning ", text);
