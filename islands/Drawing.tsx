@@ -140,7 +140,7 @@ export default function DrawingComponent() {
         <button
           className="bg-green-500 px-3 py-2 rounded-lg text-white"
           onClick={handleUpload}
-          disabled={strokes.length === 0}
+          disabled={strokes.length === 0 && currentStroke.length === 0}
         >
           Upload
         </button>
