@@ -4,10 +4,12 @@ import { redis, REDIS_TO_PRINT_KEY } from "./redis.ts";
 const timeout = 25;
 const pull_interval = 100;
 export const handler: Handlers = {
-  async GET() {
+  async GET(...params) {
     const id = Math.round(Math.random()*100000);
     console.log(id, ": ", "get request received");
     const getText = async () => await (await redis).lpop(REDIS_TO_PRINT_KEY);
+
+    console.log(JSON.stringify(params));
 
     let text = null;
     for (
@@ -15,7 +17,6 @@ export const handler: Handlers = {
       counter < (timeout * 1000 / pull_interval) && !text;
       counter++
     ) {
-      console.log(id, ": ", "polling for text");
       text = await getText();
       console.log(id, ": ", "polled ", text);
       await new Promise((res) => setTimeout(res, pull_interval));

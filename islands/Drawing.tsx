@@ -13,6 +13,8 @@ export default function DrawingComponent() {
   const [undoStack, setUndoStack] = useState<Stroke[]>([]);
   const [redoStack, setRedoStack] = useState<Stroke[]>([]);
 
+  const [error, setError] = useState<string>(undefined);
+
 
   const normalizeInput = ({ x, y, aspectRatio }: { x: number; y: number, aspectRatio: number }) => {
     return {
@@ -42,6 +44,12 @@ export default function DrawingComponent() {
 
   const handleMouseMove = (point: {x: number, y: number}) => {
     if (!isDrawing) return;
+
+    if (strokes.length + currentStroke.length > 500) {
+      setError("Maks lengde er møtt");
+      return;
+    }
+
     setCurrentStroke(
       (
         prevStroke: Stroke[],
@@ -153,6 +161,9 @@ export default function DrawingComponent() {
           Redo
         </button>
       </div>
+      {error && <div>
+        {error}
+      </div>}
     </div>
   );
 }
