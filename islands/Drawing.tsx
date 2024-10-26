@@ -134,10 +134,10 @@ export default function DrawingComponent() {
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
         svgSize={SIZE}
-        interactive={true}
-        onMouseDown={maxLengthIsMet && handleMouseDown}
-        onMouseUp={maxLengthIsMet && handleMouseUp}
-        onMouseMove={maxLengthIsMet && handleMouseMove}
+        interactive={!maxLengthIsMet}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
       />
 
       <div className="">
