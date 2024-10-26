@@ -124,6 +124,8 @@ export default function DrawingComponent() {
     return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
   };
 
+  const maxLengthIsMet = strokes.length + currentStroke.length > 250;
+
   return (
     <div class="flex gap-2 w-full flex-col items-center">
       {error && <div style={{ color: "red", fontWeight: "bold" }}>
@@ -133,9 +135,9 @@ export default function DrawingComponent() {
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
         svgSize={SIZE}
         interactive={true}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
+        onMouseDown={maxLengthIsMet && handleMouseDown}
+        onMouseUp={maxLengthIsMet && handleMouseUp}
+        onMouseMove={maxLengthIsMet && handleMouseMove}
       />
 
       <div className="">
