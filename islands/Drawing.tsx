@@ -115,8 +115,9 @@ export default function DrawingComponent() {
     return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
   };
 
+  const maxLength = 500;
   const strokeLength = strokes.reduce((acc, cur) => acc + cur.length, 0) + currentStroke.length;
-  const maxLengthIsMet = strokes.reduce((acc, cur) => acc + cur.length, 0) + currentStroke.length > 1000;
+  const maxLengthIsMet = strokes.reduce((acc, cur) => acc + cur.length, 0) + currentStroke.length > maxLength;
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
@@ -124,7 +125,7 @@ export default function DrawingComponent() {
         Nå kan du ikke lage en større tegning
       </div>}
       {!maxLengthIsMet && <div>
-        Du har brukt {strokeLength} av 1000 punkter
+        Du har brukt {strokeLength} av {maxLength} punkter
       </div>}
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
