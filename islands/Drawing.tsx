@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useCallback } from "preact/hooks";
 import TouchContainer from "./TouchContainer.tsx";
 
 type Stroke = { x: number; y: number }[];
@@ -37,14 +37,14 @@ export default function DrawingComponent() {
     */
   };
 
-  const handleMouseDown = (point: { x: number, y: number }) => {
+  const handleMouseDown = useCallback((point: { x: number, y: number }) => {
     if (strokes.length + currentStroke.length > 150) {
       setError("Maks lengde er møtt");
       return;
     }
     setIsDrawing(true);
     setCurrentStroke([normalizeInput(point)]);
-  };
+  }, [strokes, currentStroke]);
 
   const handleMouseMove = (point: { x: number, y: number }) => {
     if (!isDrawing) return;
