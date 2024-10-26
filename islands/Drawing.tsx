@@ -37,15 +37,19 @@ export default function DrawingComponent() {
     */
   };
 
-  const handleMouseDown = (point: {x: number, y: number}) => {
+  const handleMouseDown = (point: { x: number, y: number }) => {
+    if (strokes.length + currentStroke.length > 150) {
+      setError("Maks lengde er møtt");
+      return;
+    }
     setIsDrawing(true);
     setCurrentStroke([normalizeInput(point)]);
   };
 
-  const handleMouseMove = (point: {x: number, y: number}) => {
+  const handleMouseMove = (point: { x: number, y: number }) => {
     if (!isDrawing) return;
 
-    if (strokes.length + currentStroke.length > 100) {
+    if (strokes.length + currentStroke.length > 150) {
       setError("Maks lengde er møtt");
       return;
     }
@@ -161,7 +165,7 @@ export default function DrawingComponent() {
           Redo
         </button>
       </div>
-      {error && <div>
+      {error && <div style={{ color: "red", fontWeight: "bold" }}>
         {error}
       </div>}
     </div>
