@@ -1,6 +1,6 @@
 import { Head, asset } from "$fresh/runtime.ts";
-import ImageHandler from "../islands/ImageHandler.tsx";
-import Header from "../components/Header.tsx";
+import Header from "../../components/Header.tsx";
+import DrawingComponent from "../../islands/Drawing.tsx";
 
 export default function Home() {
   return (
@@ -10,9 +10,9 @@ export default function Home() {
         <link rel="stylesheet" href={asset("style.css")} />
       </Head>
       <div class="flex flex-col w-full min-h-full">
-        <Header selectedTab={1} />
-        <div class="pt-8 bg-yellow-100 flex-grow-1">
-          <ImageHandler />
+        <Header selectedTab={2} />
+        <div class="pt-8 bg-yellow-100 flex-grow-1 pb-64">
+          <DrawingComponent />
         </div>
       </div>
     </>

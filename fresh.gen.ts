@@ -2,6 +2,11 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $admin_drawing from "./routes/admin/drawing.tsx";
+import * as $admin_history from "./routes/admin/history.tsx";
+import * as $admin_image from "./routes/admin/image.tsx";
+import * as $admin_index from "./routes/admin/index.tsx";
+import * as $admin_printQueue from "./routes/admin/printQueue.tsx";
 import * as $api_add from "./routes/api/add.ts";
 import * as $api_addPreset from "./routes/api/addPreset.ts";
 import * as $api_cancel from "./routes/api/cancel.ts";
@@ -10,13 +15,10 @@ import * as $api_get from "./routes/api/get.ts";
 import * as $api_print from "./routes/api/print.ts";
 import * as $api_redis from "./routes/api/redis.ts";
 import * as $api_set from "./routes/api/set.ts";
-import * as $drawing from "./routes/drawing.tsx";
-import * as $history from "./routes/history.tsx";
-import * as $image from "./routes/image.tsx";
 import * as $index from "./routes/index.tsx";
-import * as $printQueue from "./routes/printQueue.tsx";
 import * as $Drawing from "./islands/Drawing.tsx";
 import * as $ImageHandler from "./islands/ImageHandler.tsx";
+import * as $InkLevel from "./islands/InkLevel.tsx";
 import * as $Presets from "./islands/Presets.tsx";
 import * as $Preview from "./islands/Preview.tsx";
 import * as $TouchContainer from "./islands/TouchContainer.tsx";
@@ -27,6 +29,11 @@ import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
   routes: {
+    "./routes/admin/drawing.tsx": $admin_drawing,
+    "./routes/admin/history.tsx": $admin_history,
+    "./routes/admin/image.tsx": $admin_image,
+    "./routes/admin/index.tsx": $admin_index,
+    "./routes/admin/printQueue.tsx": $admin_printQueue,
     "./routes/api/add.ts": $api_add,
     "./routes/api/addPreset.ts": $api_addPreset,
     "./routes/api/cancel.ts": $api_cancel,
@@ -35,15 +42,12 @@ const manifest = {
     "./routes/api/print.ts": $api_print,
     "./routes/api/redis.ts": $api_redis,
     "./routes/api/set.ts": $api_set,
-    "./routes/drawing.tsx": $drawing,
-    "./routes/history.tsx": $history,
-    "./routes/image.tsx": $image,
     "./routes/index.tsx": $index,
-    "./routes/printQueue.tsx": $printQueue,
   },
   islands: {
     "./islands/Drawing.tsx": $Drawing,
     "./islands/ImageHandler.tsx": $ImageHandler,
+    "./islands/InkLevel.tsx": $InkLevel,
     "./islands/Presets.tsx": $Presets,
     "./islands/Preview.tsx": $Preview,
     "./islands/TouchContainer.tsx": $TouchContainer,

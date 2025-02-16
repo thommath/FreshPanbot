@@ -1,12 +1,12 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
-import Header from "../components/Header.tsx";
-import AddPreset from "../islands/addPreset.tsx";
-import { SIZE } from "../islands/Drawing.tsx";
+import Header from "../../components/Header.tsx";
+import AddPreset from "../../islands/addPreset.tsx";
+import { SIZE } from "../../islands/Drawing.tsx";
 
-import PrintThis from "../islands/printThis.tsx";
-import TouchContainer from "../islands/TouchContainer.tsx";
-import { redis, REDIS_HISTORY_KEY } from "./api/redis.ts";
+import PrintThis from "../../islands/printThis.tsx";
+import TouchContainer from "../../islands/TouchContainer.tsx";
+import { redis, REDIS_HISTORY_KEY } from "../api/redis.ts";
 
 interface PrinterQueue {
   items: string[];

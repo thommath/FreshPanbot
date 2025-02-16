@@ -1,4 +1,7 @@
 {
+    "compilerOptions": {
+      "jsx": "react"
+    },
     "paths": {
         "react": ["https://esm.sh/preact@10.8.1"],
         "react-dom": ["https://esm.sh/preact@10.8.1"]

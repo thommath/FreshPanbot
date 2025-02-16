@@ -1,10 +1,44 @@
 import { useState, useCallback } from "preact/hooks";
 import TouchContainer from "./TouchContainer.tsx";
+import InkLevel from "./InkLevel.tsx";
 
 type Stroke = { x: number; y: number }[];
 
 export const SIZE = 120 * 11;
 export const DRAWING_SIZE = 50 * 11;
+
+function removeRepeatedPoints(stroke: Stroke) {
+  return stroke.filter((point, index) => {
+    if (index === 0) {
+      return true;
+    }
+    return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
+  });
+}
+
+const convertToServerSize = (s: Stroke) => {
+  const scale = (n: number) => Math.round(n * (SIZE / DRAWING_SIZE));
+  return s.map((v) => ({ x: scale(v.x), y: scale(v.y) }));
+};
+
+const convertStrokesToServerPath = (listOfStokes: Stroke[]) => {
+  return listOfStokes.reduce(
+    (acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)),
+    "",
+  ) + " Z";
+};
+const strokeToPath = (stroke: Stroke) => {
+  return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
+};
+
+const calculateStrokeLength = (stroke: Stroke) => {
+  return stroke.reduce((acc, cur, index) => {
+    if (index === 0) return 0;
+    return acc + Math.sqrt(
+      Math.pow(cur.x - stroke[index - 1].x, 2) + Math.pow(cur.y - stroke[index - 1].y, 2),
+    );
+  }, 0);
+};
 
 export default function DrawingComponent() {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -12,8 +46,6 @@ export default function DrawingComponent() {
   const [strokes, setStrokes] = useState<Stroke[]>([]);
   const [undoStack, setUndoStack] = useState<Stroke[]>([]);
   const [redoStack, setRedoStack] = useState<Stroke[]>([]);
-
-  const [error, setError] = useState<string>(undefined);
 
 
   const normalizeInput = ({ x, y, aspectRatio }: { x: number; y: number, aspectRatio: number }) => {
@@ -62,26 +94,7 @@ export default function DrawingComponent() {
     setCurrentStroke([]);
   };
 
-  function removeRepeatedPoints(stroke: Stroke) {
-    return stroke.filter((point, index) => {
-      if (index === 0) {
-        return true;
-      }
-      return point.x !== stroke[index - 1].x || point.y !== stroke[index - 1].y;
-    });
-  }
 
-  const convertToServerSize = (s: Stroke) => {
-    const scale = (n: number) => Math.round(n * (SIZE / DRAWING_SIZE));
-    return s.map((v) => ({ x: scale(v.x), y: scale(v.y) }));
-  };
-
-  const convertStrokesToServerPath = (listOfStokes: Stroke[]) => {
-    return listOfStokes.reduce(
-      (acc, cur) => acc + " " + strokeToPath(convertToServerSize(cur)),
-      "",
-    ) + " Z";
-  };
 
   const handleUpload = () => {
     // code to handle uploading the strokes
@@ -111,22 +124,20 @@ export default function DrawingComponent() {
     setUndoStack([]);
   };
 
-  const strokeToPath = (stroke: Stroke) => {
-    return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
-  };
 
-  const maxLength = 500;
-  const strokeLength = strokes.reduce((acc, cur) => acc + cur.length, 0) + currentStroke.length;
-  const maxLengthIsMet = strokes.reduce((acc, cur) => acc + cur.length, 0) + currentStroke.length > maxLength;
+  const maxLength = 3000;
+  const strokeLength = strokes.reduce((acc, cur) => acc + calculateStrokeLength(cur), 0) + calculateStrokeLength(currentStroke);
+  const maxLengthIsMet = strokeLength > maxLength;
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
       {maxLengthIsMet && <div style={{ color: "red", fontWeight: "bold" }}>
-        Nå kan du ikke lage en større tegning
+        Du er tom for pannekakerøre! Tegn mindre eller trykk "Discard" for å slette siste tegning og prøv igjen.
       </div>}
-      {!maxLengthIsMet && <div>
-        Du har brukt {strokeLength} av {maxLength} punkter
+      {!maxLengthIsMet && <div style={{ fontWeight: "bold" }}>
+        Her ser du hvor mye pannekakerøre du har igjen.
       </div>}
+      <InkLevel currentLength={strokeLength} maxLength={maxLength} />
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
         svgSize={SIZE}
@@ -138,32 +149,32 @@ export default function DrawingComponent() {
 
       <div className="">
         <button
-          className="bg-green-500 px-3 py-2 rounded-lg text-white"
+          className="bg-green-500 px-3 py-2 m-2 rounded-lg text-white"
           onClick={handleUpload}
           disabled={strokes.length === 0 && currentStroke.length === 0}
         >
-          Upload
+          Print tegningen
         </button>
         <button
-          className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+          className="bg-blue-500 px-3 py-2 m-2 rounded-lg text-white"
           onClick={handleDiscard}
           disabled={strokes.length === 0}
         >
-          Discard
+          Restart
         </button>
         <button
-          className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+          className="bg-blue-500 px-3 py-2 m-2 rounded-lg text-white"
           onClick={handleUndo}
           disabled={strokes.length === 0}
         >
-          Undo
+          Angre siste strek
         </button>
         <button
-          className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+          className="bg-blue-500 px-3 py-2 m-2 rounded-lg text-white"
           onClick={handleRedo}
           disabled={undoStack.length === 0}
         >
-          Redo
+          Angre angre
         </button>
       </div>
     </div>

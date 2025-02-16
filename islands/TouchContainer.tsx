@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { createRef, MouseEvent, TouchEvent } from "preact";
 
 interface TouchContainerProps {
@@ -45,6 +45,11 @@ const TouchContainer = ({
       onMouseUp(e);
     }
   };
+
+  useEffect(() => {
+    setIsClicked(false);
+    onMouseUp({ timeStamp: 0 });
+  }, [interactive]);
 
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     console.log("Touch move");
