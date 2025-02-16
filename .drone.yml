@@ -8,8 +8,8 @@ steps:
   - name: docker_sock
     path: /var/run
   commands:
-  - docker build --build-arg GIT_REVISION=${DRONE_COMMIT_SHA:0:7} . -t 10.8.0.14:32000/freshpanbot:latest -t 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
-  - docker push 10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
+  - docker build --build-arg GIT_REVISION=${DRONE_COMMIT_SHA:0:7} . -t 100.96.0.2:32000/freshpanbot:latest -t 100.96.0.2:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
+  - docker push 100.96.0.2:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}
 
 
 - name: update manifest repo
@@ -32,7 +32,7 @@ steps:
 
     - wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O yq
     - chmod +x yq
-    - ./yq e -i '.spec.template.spec.containers[0].image |= "10.8.0.14:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}"' 'freshpanbot/deployment.yaml'
+    - ./yq e -i '.spec.template.spec.containers[0].image |= "100.96.0.2:32000/freshpanbot:${DRONE_COMMIT_SHA:0:7}"' 'freshpanbot/deployment.yaml'
     - git add freshpanbot/deployment.yaml
     - git commit -m "Bump iot-frontend-ts to ${DRONE_COMMIT_SHA:0:7}"
     - git push
