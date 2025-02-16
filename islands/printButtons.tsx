@@ -4,7 +4,7 @@ export default function PrintButtons() {
       <button
         onClick={() =>
           fetch("/api/print", { method: "POST" }).then(
-            () => window.location.href = "/printQueue",
+            () => window.location.href = "/admin/printQueue",
           )}
         className="bg-blue-500 px-3 py-2 rounded-lg text-white"
       >
@@ -13,7 +13,7 @@ export default function PrintButtons() {
       <button
         onClick={() =>
           fetch("/api/cancel", { method: "POST" }).then(
-            () => window.location.href = "/printQueue",
+            () => window.location.href = "/admin/printQueue",
           )}
         className="bg-blue-500 px-3 py-2 rounded-lg text-white"
       >

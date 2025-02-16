@@ -13,7 +13,7 @@ export default function Presets(props: PresetsProps) {
       body: stroke,
       method: "POST",
     }).then(
-      () => window.location.href = "/printQueue"
+      () => window.location.href = "/admin/printQueue"
     );
   };
   const deletePreset = (id: string) => {

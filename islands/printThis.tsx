@@ -8,7 +8,7 @@ export default function PrintButtons(props: PrintThisProps) {
       <button
         onClick={() =>
           fetch("/api/add", { method: "POST", body: props.str }).then(
-            () => window.location.href = "/printQueue",
+            () => window.location.href = "/admin/printQueue",
           )}
         className="bg-blue-500 px-3 py-2 rounded-lg text-white"
       >
