@@ -102,7 +102,7 @@ export default function DrawingComponent() {
       body: convertStrokesToServerPath([...strokes, currentStroke]),
       method: "POST",
     }).then(
-      () => window.location.href = "/printQueue"
+      () => window.location.href = "/success"
     );
   };
 

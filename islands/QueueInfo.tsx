@@ -5,10 +5,13 @@ export const QueueInfo = () => {
     const [queue, setQueue] = useState(-1);
 
     useEffect(() => {
-        const poll = setInterval(async () => {
+        const pollfunc = async () => {
             const data = await fetch("/api/queue").then((res) => res.text());
             setQueue(Number.parseInt(data, 10));
-        }, 5000);
+        };
+
+        const poll = setInterval(pollfunc, 5000);
+        pollfunc();
         return () => clearInterval(poll);
     }, []);
 
