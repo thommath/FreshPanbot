@@ -1,7 +1,7 @@
 import { asset, Head } from "$fresh/runtime.ts";
 import Logo from "../components/Logo.tsx";
-import DrawingComponent from "../islands/Drawing.tsx";
 import { QueueInfo } from "../islands/QueueInfo.tsx";
+
 
 export default function Home() {
   return (
@@ -13,12 +13,16 @@ export default function Home() {
       <div class="flex flex-col w-full min-h-full">
         <Logo />
         <div class="pt-8 bg-yellow-100 flex-grow-1 pb-64">
-          <DrawingComponent />
-          <div className="text-center">
-            <QueueInfo />
-          </div>
+          <h1>
+            Suksess! Tegningen din er lagt i kø for å bli tegnet.
+          </h1>
+          <QueueInfo />
+          <a href="/">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Tegn en ny tegning
+            </button>
+          </a>
         </div>
-
       </div>
     </>
   );

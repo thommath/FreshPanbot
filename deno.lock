@@ -421,6 +421,7 @@
     "https://esm.sh/preact@10.11.3/denonext/jsx-runtime.mjs": "4006e2177552109f788446f70cf89a686b1710eed69406352eeddc20e2ab39ed",
     "https://esm.sh/preact@10.11.3/denonext/preact.mjs": "06a5acf6ca074832f32a367e64b5d03d1c5a58b3e3c574beb430e9aff86d533b",
     "https://esm.sh/preact@10.11.3/hooks": "9b1fedf203da245a995423b58915c3c422499e7225fc2df93e5b9bf71dadebca",
+    "https://esm.sh/preact@10.11.3/hooks/": "9b1fedf203da245a995423b58915c3c422499e7225fc2df93e5b9bf71dadebca",
     "https://esm.sh/preact@10.11.3/jsx-runtime": "9678047dcd6dfd9d5b47e5a0cd46ac6ed3692d0c0e4877a51bd3660945c2cec4",
     "https://esm.sh/style-vendorizer@2.2.3/denonext/style-vendorizer.mjs": "5201bd4a17899690af07a1f1d1de8504fb6ed401e3bd7fca4ce76598c2b3f4e6",
     "https://esm.sh/style-vendorizer@2.2.3?target=denonext": "046aa4bfbc2f2f1d624d74bde1b7d2227a5d9a00122725b711768554999fc3eb",

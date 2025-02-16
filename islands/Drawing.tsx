@@ -167,14 +167,14 @@ export default function DrawingComponent() {
           onClick={handleUndo}
           disabled={strokes.length === 0}
         >
-          Angre siste strek
+          Angre
         </button>
         <button
           className="bg-blue-500 px-3 py-2 m-2 rounded-lg text-white"
           onClick={handleRedo}
           disabled={undoStack.length === 0}
         >
-          Angre angre
+          Gjør om
         </button>
       </div>
     </div>

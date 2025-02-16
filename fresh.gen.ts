@@ -13,14 +13,17 @@ import * as $api_cancel from "./routes/api/cancel.ts";
 import * as $api_deletePreset from "./routes/api/deletePreset.ts";
 import * as $api_get from "./routes/api/get.ts";
 import * as $api_print from "./routes/api/print.ts";
+import * as $api_queue from "./routes/api/queue.ts";
 import * as $api_redis from "./routes/api/redis.ts";
 import * as $api_set from "./routes/api/set.ts";
 import * as $index from "./routes/index.tsx";
+import * as $success from "./routes/success.tsx";
 import * as $Drawing from "./islands/Drawing.tsx";
 import * as $ImageHandler from "./islands/ImageHandler.tsx";
 import * as $InkLevel from "./islands/InkLevel.tsx";
 import * as $Presets from "./islands/Presets.tsx";
 import * as $Preview from "./islands/Preview.tsx";
+import * as $QueueInfo from "./islands/QueueInfo.tsx";
 import * as $TouchContainer from "./islands/TouchContainer.tsx";
 import * as $addPreset from "./islands/addPreset.tsx";
 import * as $printButtons from "./islands/printButtons.tsx";
@@ -40,9 +43,11 @@ const manifest = {
     "./routes/api/deletePreset.ts": $api_deletePreset,
     "./routes/api/get.ts": $api_get,
     "./routes/api/print.ts": $api_print,
+    "./routes/api/queue.ts": $api_queue,
     "./routes/api/redis.ts": $api_redis,
     "./routes/api/set.ts": $api_set,
     "./routes/index.tsx": $index,
+    "./routes/success.tsx": $success,
   },
   islands: {
     "./islands/Drawing.tsx": $Drawing,
@@ -50,6 +55,7 @@ const manifest = {
     "./islands/InkLevel.tsx": $InkLevel,
     "./islands/Presets.tsx": $Presets,
     "./islands/Preview.tsx": $Preview,
+    "./islands/QueueInfo.tsx": $QueueInfo,
     "./islands/TouchContainer.tsx": $TouchContainer,
     "./islands/addPreset.tsx": $addPreset,
     "./islands/printButtons.tsx": $printButtons,
