@@ -8,6 +8,7 @@ import * as $admin_image from "./routes/admin/image.tsx";
 import * as $admin_index from "./routes/admin/index.tsx";
 import * as $admin_printQueue from "./routes/admin/printQueue.tsx";
 import * as $api_add from "./routes/api/add.ts";
+import * as $api_addFirst from "./routes/api/addFirst.ts";
 import * as $api_addPreset from "./routes/api/addPreset.ts";
 import * as $api_cancel from "./routes/api/cancel.ts";
 import * as $api_deletePreset from "./routes/api/deletePreset.ts";
@@ -38,6 +39,7 @@ const manifest = {
     "./routes/admin/index.tsx": $admin_index,
     "./routes/admin/printQueue.tsx": $admin_printQueue,
     "./routes/api/add.ts": $api_add,
+    "./routes/api/addFirst.ts": $api_addFirst,
     "./routes/api/addPreset.ts": $api_addPreset,
     "./routes/api/cancel.ts": $api_cancel,
     "./routes/api/deletePreset.ts": $api_deletePreset,

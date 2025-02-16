@@ -14,6 +14,15 @@ export default function PrintButtons(props: PrintThisProps) {
       >
         Add to queue
       </button>
+      <button
+        onClick={() =>
+          fetch("/api/addFirst", { method: "POST", body: props.str }).then(
+            () => window.location.href = "/admin/printQueue",
+          )}
+        className="bg-blue-500 px-3 py-2 rounded-lg text-white"
+      >
+        Add first to queue
+      </button>
     </div>
   );
 }
