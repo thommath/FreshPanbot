@@ -1,5 +1,7 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { createRef, MouseEvent, TouchEvent } from "preact";
+import { getStroke } from "npm:perfect-freehand@1.2.2";
+import { convertToServerSize, type Stroke } from "./Drawing.tsx";
 
 interface TouchContainerProps {
   onMouseMove: (position: { x: number; y: number; timeStamp: number, aspectRatio?: number }) => void;
@@ -7,6 +9,7 @@ interface TouchContainerProps {
   onMouseUp: (position: { timeStamp: number }) => void;
 
   strokeSVG: string;
+  strokes: Stroke[];
   svgSize: number;
   canvasRef?: any;
   interactive: boolean;
@@ -20,6 +23,7 @@ const TouchContainer = ({
   onMouseDown,
   onMouseUp,
   strokeSVG,
+  strokes,
   svgSize,
   interactive,
 }: TouchContainerProps) => {
@@ -83,13 +87,29 @@ const TouchContainer = ({
     });
   }, []);
 
+  const serverSizeStrokes = useMemo(() =>
+    strokes.map(convertToServerSize), [strokes]);
+
+  const paths = useMemo(() =>
+    serverSizeStrokes.map(stroke => getStroke(stroke, {
+    })).map(getSvgPathFromStroke), [serverSizeStrokes]);
+
+  const cirlces = useMemo(() =>
+    serverSizeStrokes.filter(a => a.length).map((stroke) => (
+      <circle
+        cx={stroke?.[0]?.x}
+        cy={stroke?.[0]?.y}
+        r={20}
+        fill="black"
+      />)), [serverSizeStrokes]);
+
   return (
     <div className="full-width full-height">
       <div className="relative rounded-full bg-gray-300 mt-8" style={{ width: `${size.height}px`, height: `${size.height}px` }}>
         <div
           className={`absolute top-[${topPercentage}%] h-[${100 - topPercentage * 2
             }%] left-[${leftPercentage}%] w-[${100 - leftPercentage * 2}%]`}
-            ref={containerRef} 
+          ref={containerRef}
         >
           <svg
             className="border-1 border-black absolute top-0 left-0 h-full w-full"
@@ -97,13 +117,16 @@ const TouchContainer = ({
             viewBox={`0 0 ${svgSize} ${svgSize / ((100 - leftPercentage * 2) / (100 - topPercentage * 2))
               }`}
           >
-            <path
-              d={strokeSVG.slice(0, -1)}
-              stroke-width={40}
-              stroke-linecap="round"
-              style={{ fill: "none", stroke: "black" }}
-            >
-            </path>
+            {cirlces}
+            {paths.map((path) => (
+              <path
+                d={path}
+                stroke-width={40}
+                stroke-linecap="round"
+                style={{ stroke: "black" }}
+              >
+              </path>
+            ))}
           </svg>
           {containerRef && interactive && (
             <div
@@ -123,5 +146,42 @@ const TouchContainer = ({
     </div>
   );
 };
+
+
+const average = (a, b) => (a + b) / 2
+
+function getSvgPathFromStroke(points, closed = true) {
+  const len = points.length
+
+  if (len < 4) {
+    return ``
+  }
+
+  let a = points[0]
+  let b = points[1]
+  const c = points[2]
+
+  let result = `M${a[0].toFixed(2)},${a[1].toFixed(2)} Q${b[0].toFixed(
+    2
+  )},${b[1].toFixed(2)} ${average(b[0], c[0]).toFixed(2)},${average(
+    b[1],
+    c[1]
+  ).toFixed(2)} T`
+
+  for (let i = 2, max = len - 1; i < max; i++) {
+    a = points[i]
+    b = points[i + 1]
+    result += `${average(a[0], b[0]).toFixed(2)},${average(a[1], b[1]).toFixed(
+      2
+    )} `
+  }
+
+  if (closed) {
+    result += 'Z'
+  }
+
+  return result
+}
+
 
 export default TouchContainer;

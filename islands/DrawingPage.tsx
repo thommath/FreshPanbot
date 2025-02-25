@@ -10,7 +10,7 @@ export default function DrawingPage() {
     return (
         <>
             <div class="flex flex-row w-full min-h-full bg-yellow-100">
-                <div className="flex flex-col justify-between">
+                <div className="flex p-8 flex-col justify-between">
                     <div>
                         <img src={asset("logo.png")} alt="" class="h-64" />
                         <h1 class="text-8xl">PanBot</h1>

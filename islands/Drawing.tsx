@@ -1,8 +1,8 @@
 import { useState, useCallback, useMemo, useEffect } from "preact/hooks";
 import TouchContainer from "./TouchContainer.tsx";
 
-type Point = { x: number; y: number };
-type Stroke = Point[];
+export type Point = { x: number; y: number };
+export type Stroke = Point[];
 
 export const SIZE = 120 * 11;
 export const DRAWING_SIZE = 50 * 11;
@@ -16,7 +16,7 @@ function removeRepeatedPoints(stroke: Stroke): Stroke {
   });
 }
 
-const convertToServerSize = (s: Stroke) => {
+export const convertToServerSize = (s: Stroke) => {
   const scale = (n: number) => Math.round(n * (SIZE / DRAWING_SIZE));
   return s.map((v) => ({ x: scale(v.x), y: scale(v.y) }));
 };
@@ -142,6 +142,7 @@ export default function DrawingComponent({ setStrokeLength, setMaxLength }: Prop
     <div class="flex gap-2 w-full flex-col items-center">
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
+        strokes={[...strokes, currentStroke]}
         svgSize={SIZE}
         interactive={!maxLengthIsMet}
         onMouseDown={handleMouseDown}

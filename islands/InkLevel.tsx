@@ -1,5 +1,3 @@
-import { transform } from "https://deno.land/x/esbuild@v0.20.2/mod.js";
-
 type InkLevelProps = {
     maxLength: number;
     currentLength: number;
@@ -32,14 +30,14 @@ export default function InkLevel({ maxLength, currentLength }: InkLevelProps) {
                     <div style={progressBarStyle} className="bg-yellow-500"></div>
                 </div>
             </div>
-            <div>
+            <div className="flex text-center flex-col" style={{width: '256px'}}>
                 {maxLengthIsMet && <div style={{ color: "red", fontWeight: "bold" }}>
-                    Du er tom for pannekakerøre! Tegn mindre eller trykk "Discard" for å slette siste tegning og prøv igjen.
+                    Du er tom for pannekakerøre!
+                </div>}
+                {!maxLengthIsMet && <div style={{ fontWeight: "bold" }}>
+                    Her ser du hvor mye pannekakerøre du har igjen.
                 </div>}
             </div>
-            {!maxLengthIsMet && <div style={{ fontWeight: "bold" }}>
-                Her ser du hvor mye pannekakerøre du har igjen.
-            </div>}
         </div>
     );
 }
