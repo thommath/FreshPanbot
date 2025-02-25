@@ -80,7 +80,7 @@ const TouchContainer = ({
     const width = document.body.clientWidth;
     const height = document.body.clientHeight;
     const sizeToUse = width > height ? height : width;
-    const scaledDown = sizeToUse * 0.8;
+    const scaledDown = sizeToUse * 0.85;
     setSize({
       width: scaledDown,
       height: scaledDown,
