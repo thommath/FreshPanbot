@@ -12,7 +12,7 @@ export default function Home() {
       </Head>
       <div class="flex flex-col w-full min-h-full">
         <Logo />
-        <div class="pt-8 bg-yellow-100 flex-grow-1 pb-64">
+        <div class="pt-8 bg-yellow-100 flex-grow-1">
           <div class="text-center">
             <h1 class="text-3xl font-bold m-1">
               Suksess! Tegningen din er lagt i kø for å bli tegnet.

@@ -11,7 +11,7 @@ export default function Home() {
       </Head>
       <div class="flex flex-col w-full min-h-full">
         <Header selectedTab={2} />
-        <div class="pt-8 bg-yellow-100 flex-grow-1 pb-64">
+        <div class="pt-8 bg-yellow-100 flex-grow-1">
           <DrawingComponent />
         </div>
       </div>

@@ -20,6 +20,7 @@ import * as $api_set from "./routes/api/set.ts";
 import * as $index from "./routes/index.tsx";
 import * as $success from "./routes/success.tsx";
 import * as $Drawing from "./islands/Drawing.tsx";
+import * as $DrawingPage from "./islands/DrawingPage.tsx";
 import * as $ImageHandler from "./islands/ImageHandler.tsx";
 import * as $InkLevel from "./islands/InkLevel.tsx";
 import * as $Presets from "./islands/Presets.tsx";
@@ -53,6 +54,7 @@ const manifest = {
   },
   islands: {
     "./islands/Drawing.tsx": $Drawing,
+    "./islands/DrawingPage.tsx": $DrawingPage,
     "./islands/ImageHandler.tsx": $ImageHandler,
     "./islands/InkLevel.tsx": $InkLevel,
     "./islands/Presets.tsx": $Presets,

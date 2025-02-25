@@ -2,8 +2,8 @@ import { useEffect, useState } from "preact/hooks";
 import { createRef, MouseEvent, TouchEvent } from "preact";
 
 interface TouchContainerProps {
-  onMouseMove: (position: { x: number; y: number; timeStamp: number }) => void;
-  onMouseDown: (position: { x: number; y: number; timeStamp: number }) => void;
+  onMouseMove: (position: { x: number; y: number; timeStamp: number, aspectRatio?: number }) => void;
+  onMouseDown: (position: { x: number; y: number; timeStamp: number, aspectRatio?: number }) => void;
   onMouseUp: (position: { timeStamp: number }) => void;
 
   strokeSVG: string;
@@ -12,8 +12,8 @@ interface TouchContainerProps {
   interactive: boolean;
 }
 
-const topPercentage = 15;
-const leftPercentage = 10;
+const topPercentage = 18;
+const leftPercentage = 12;
 
 const TouchContainer = ({
   onMouseMove,
@@ -51,37 +51,6 @@ const TouchContainer = ({
     onMouseUp({ timeStamp: 0 });
   }, [interactive]);
 
-  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
-    console.log("Touch move");
-    const touch = e.touches[0];
-    const mouseEvent = {
-      ...e,
-      clientX: touch.clientX,
-      clientY: touch.clientY,
-      offsetX: touch.pageX - e.currentTarget.getBoundingClientRect().left,
-      offsetY: touch.pageY - e.currentTarget.getBoundingClientRect().top,
-    } as any as MouseEvent<HTMLDivElement>;
-    handleMouseMove(mouseEvent);
-  };
-
-  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
-    console.log("Touch start");
-    const touch = e.touches[0];
-    const mouseEvent = {
-      ...e,
-      clientX: touch.clientX,
-      clientY: touch.clientY,
-      offsetX: touch.pageX - e.currentTarget.getBoundingClientRect().left,
-      offsetY: touch.pageY - e.currentTarget.getBoundingClientRect().top,
-    } as any as MouseEvent<HTMLDivElement>;
-    handleMouseDown(mouseEvent);
-  };
-
-  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
-    console.log("Touch end");
-    handleMouseUp(e as any as MouseEvent<HTMLDivElement>);
-  };
-
   const calculatePercentagePosition = (event: {
     clientX: number;
     clientY: number;
@@ -102,39 +71,54 @@ const TouchContainer = ({
     return { x: xPercentage, y: yPercentage, aspectRatio: containerRect.width / containerRect.height, timeStamp: event.timeStamp };
   };
 
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  useEffect(() => {
+    const width = document.body.clientWidth;
+    const height = document.body.clientHeight;
+    const sizeToUse = width > height ? height : width;
+    const scaledDown = sizeToUse * 0.8;
+    setSize({
+      width: scaledDown,
+      height: scaledDown,
+    });
+  }, []);
+
   return (
-    <div className="relative rounded-full h-96 w-96 bg-gray-300 mt-8">
-      <div
-        className={`absolute top-[${topPercentage}%] h-[${100 - topPercentage * 2
-          }%] left-[${leftPercentage}%] w-[${100 - leftPercentage * 2}%]`}
-      >
-        <svg
-          className="border-1 border-black absolute top-0 left-0 h-full w-full"
-          style="transform: scaleY(-1);"
-          viewBox={`0 0 ${svgSize} ${svgSize / ((100 - leftPercentage * 2) / (100 - topPercentage * 2))
-            }`}
+    <div className="full-width full-height">
+      <div className="relative rounded-full bg-gray-300 mt-8" style={{ width: `${size.height}px`, height: `${size.height}px` }}>
+        <div
+          className={`absolute top-[${topPercentage}%] h-[${100 - topPercentage * 2
+            }%] left-[${leftPercentage}%] w-[${100 - leftPercentage * 2}%]`}
+            ref={containerRef} 
         >
-          <path
-            d={strokeSVG.slice(0, -1)}
-            stroke-width={40}
-            stroke-linecap="round"
-            style={{ fill: "none", stroke: "black" }}
+          <svg
+            className="border-1 border-black absolute top-0 left-0 h-full w-full"
+            style="transform: scaleY(-1);"
+            viewBox={`0 0 ${svgSize} ${svgSize / ((100 - leftPercentage * 2) / (100 - topPercentage * 2))
+              }`}
           >
-          </path>
-        </svg>
-        {containerRef && interactive && (
-          <div
-            className="absolute top-0 left-0 h-full w-full touch-none"
-            onPointerDown={handleMouseDown}
-            onPointerMove={handleMouseMove}
-            onPointerUp={handleMouseUp}
-            ref={containerRef}
-            style={{
-              touchAction: 'none'
-            }}
-          >
-          </div>
-        )}
+            <path
+              d={strokeSVG.slice(0, -1)}
+              stroke-width={40}
+              stroke-linecap="round"
+              style={{ fill: "none", stroke: "black" }}
+            >
+            </path>
+          </svg>
+          {containerRef && interactive && (
+            <div
+              className="absolute top-0 left-0 h-full w-full touch-none"
+              onPointerDown={handleMouseDown}
+              onPointerMove={handleMouseMove}
+              onPointerUp={handleMouseUp}
+              ref={containerRef}
+              style={{
+                touchAction: 'none'
+              }}
+            >
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

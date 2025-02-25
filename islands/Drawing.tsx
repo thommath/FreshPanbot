@@ -1,13 +1,13 @@
-import { useState, useCallback } from "preact/hooks";
+import { useState, useCallback, useMemo, useEffect } from "preact/hooks";
 import TouchContainer from "./TouchContainer.tsx";
-import InkLevel from "./InkLevel.tsx";
 
-type Stroke = { x: number; y: number }[];
+type Point = { x: number; y: number };
+type Stroke = Point[];
 
 export const SIZE = 120 * 11;
 export const DRAWING_SIZE = 50 * 11;
 
-function removeRepeatedPoints(stroke: Stroke) {
+function removeRepeatedPoints(stroke: Stroke): Stroke {
   return stroke.filter((point, index) => {
     if (index === 0) {
       return true;
@@ -40,7 +40,33 @@ const calculateStrokeLength = (stroke: Stroke) => {
   }, 0);
 };
 
-export default function DrawingComponent() {
+const normalizeInput = ({ x, y, aspectRatio }: { x: number; y: number, aspectRatio?: number }): Point => {
+  return {
+    x: Math.round(x * DRAWING_SIZE / 100),
+    y: Math.round(y * DRAWING_SIZE / (100 * (aspectRatio || 1))),
+  }
+  /*
+  const boundingBox = (canvasRef.current as HTMLDivElement)
+    .getBoundingClientRect();
+  const canvasWidth = boundingBox.width;
+  const canvasHeight = boundingBox.height;
+  const aspectRatio = canvasWidth / canvasHeight;
+  const movedX = x - boundingBox.left;
+  const movedY = y - boundingBox.top;
+  const normalizedX = Math.round((movedX / canvasWidth) * DRAWING_SIZE);
+  const normalizedY = Math.round(
+    (1-(movedY / canvasHeight)) * (DRAWING_SIZE / aspectRatio),
+  );
+  return { x: normalizedX, y: normalizedY };
+  */
+};
+
+type Props = {
+  setStrokeLength: (length: number) => void;
+  setMaxLength: (length: number) => void;
+};
+
+export default function DrawingComponent({ setStrokeLength, setMaxLength }: Props) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentStroke, setCurrentStroke] = useState<Stroke>([]);
   const [strokes, setStrokes] = useState<Stroke[]>([]);
@@ -48,38 +74,18 @@ export default function DrawingComponent() {
   const [redoStack, setRedoStack] = useState<Stroke[]>([]);
 
 
-  const normalizeInput = ({ x, y, aspectRatio }: { x: number; y: number, aspectRatio: number }) => {
-    return {
-      x: Math.round(x * DRAWING_SIZE / 100),
-      y: Math.round(y * DRAWING_SIZE / (100 * aspectRatio)),
-    }
-    /*
-    const boundingBox = (canvasRef.current as HTMLDivElement)
-      .getBoundingClientRect();
-    const canvasWidth = boundingBox.width;
-    const canvasHeight = boundingBox.height;
-    const aspectRatio = canvasWidth / canvasHeight;
-    const movedX = x - boundingBox.left;
-    const movedY = y - boundingBox.top;
-    const normalizedX = Math.round((movedX / canvasWidth) * DRAWING_SIZE);
-    const normalizedY = Math.round(
-      (1-(movedY / canvasHeight)) * (DRAWING_SIZE / aspectRatio),
-    );
-    return { x: normalizedX, y: normalizedY };
-    */
-  };
 
-  const handleMouseDown = useCallback((point: { x: number, y: number }) => {
+  const handleMouseDown = useCallback((point: { x: number, y: number, aspectRatio?: number }) => {
     setIsDrawing(true);
     setCurrentStroke([normalizeInput(point)]);
   }, [strokes, currentStroke]);
 
-  const handleMouseMove = (point: { x: number, y: number }) => {
+  const handleMouseMove = (point: { x: number, y: number, aspectRatio?: number }) => {
     if (!isDrawing) return;
 
     setCurrentStroke(
       (
-        prevStroke: Stroke[],
+        prevStroke,
       ) => [...prevStroke, normalizeInput(point)],
     );
   };
@@ -93,8 +99,6 @@ export default function DrawingComponent() {
     }
     setCurrentStroke([]);
   };
-
-
 
   const handleUpload = () => {
     // code to handle uploading the strokes
@@ -125,19 +129,17 @@ export default function DrawingComponent() {
   };
 
 
-  const maxLength = 3000;
-  const strokeLength = strokes.reduce((acc, cur) => acc + calculateStrokeLength(cur), 0) + calculateStrokeLength(currentStroke);
-  const maxLengthIsMet = strokeLength > maxLength;
+  const maxLength = useMemo(() => 3000, []);
+  const strokeLength = useMemo(() => strokes.reduce((acc, cur) => acc + calculateStrokeLength(cur), 0) + calculateStrokeLength(currentStroke), [strokes, currentStroke]);
+  const maxLengthIsMet = useMemo(() => strokeLength > maxLength, [strokeLength, maxLength]);
+
+  useEffect(() => {
+    setStrokeLength(strokeLength);
+    setMaxLength(maxLength);
+  }, [strokeLength, maxLength]);
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">
-      {maxLengthIsMet && <div style={{ color: "red", fontWeight: "bold" }}>
-        Du er tom for pannekakerøre! Tegn mindre eller trykk "Discard" for å slette siste tegning og prøv igjen.
-      </div>}
-      {!maxLengthIsMet && <div style={{ fontWeight: "bold" }}>
-        Her ser du hvor mye pannekakerøre du har igjen.
-      </div>}
-      <InkLevel currentLength={strokeLength} maxLength={maxLength} />
       <TouchContainer
         strokeSVG={convertStrokesToServerPath([...strokes, currentStroke])}
         svgSize={SIZE}

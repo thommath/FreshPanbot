@@ -1,5 +1,5 @@
+import type { Preset } from "../routes/admin/index.tsx";
 import { SIZE } from "./Drawing.tsx";
-import { Preset } from "../routes/index.tsx";
 import TouchContainer from "./TouchContainer.tsx";
 
 export type PresetsProps = {
@@ -38,6 +38,10 @@ export default function Presets(props: PresetsProps) {
                   <TouchContainer
                     strokeSVG={preset.path}
                     svgSize={SIZE}
+                    interactive={false}
+                    onMouseDown={() => { }}
+                    onMouseMove={() => { }}
+                    onMouseUp={() => { }}
                   />
                 </div>
                 <button onClick={() => deletePreset(preset.id)}>
@@ -47,9 +51,9 @@ export default function Presets(props: PresetsProps) {
             ))}
           </div>
         )}
-        {props.presets.length === 0 && <div>No presets set</div>
+      {props.presets.length === 0 && <div>No presets set</div>
 
-        }
+      }
     </>
   );
 }

@@ -1,7 +1,5 @@
 import { asset, Head } from "$fresh/runtime.ts";
-import Logo from "../components/Logo.tsx";
-import DrawingComponent from "../islands/Drawing.tsx";
-import { QueueInfo } from "../islands/QueueInfo.tsx";
+import DrawingPage from "../islands/DrawingPage.tsx";
 
 export default function Home() {
   return (
@@ -10,16 +8,7 @@ export default function Home() {
         <title>Panbot</title>
         <link rel="stylesheet" href={asset("style.css")} />
       </Head>
-      <div class="flex flex-col w-full min-h-full">
-        <Logo />
-        <div class="pt-8 bg-yellow-100 flex-grow-1 pb-64">
-          <DrawingComponent />
-          <div className="text-center">
-            <QueueInfo />
-          </div>
-        </div>
-
-      </div>
+      <DrawingPage />
     </>
   );
 }
