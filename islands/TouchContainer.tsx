@@ -105,7 +105,7 @@ const TouchContainer = ({
 
   return (
     <div className="full-width full-height">
-      <div className="relative rounded-full bg-gray-300 mt-8" style={{ width: `${size.height}px`, height: `${size.height}px` }}>
+      <div className="relative rounded-full bg-gray-300 mt-8" style={{ width: `${size.height}px`, height: `${size.height}px`, minHeight: '250px', minWidth: '250px' }}>
         <div
           className={`absolute top-[${topPercentage}%] h-[${100 - topPercentage * 2
             }%] left-[${leftPercentage}%] w-[${100 - leftPercentage * 2}%]`}
