@@ -118,7 +118,7 @@ const TouchContainer = ({
               }`}
           >
             {cirlces}
-            {paths.map((path) => (
+            {paths?.map((path) => (
               <path
                 d={path}
                 stroke-width={40}
