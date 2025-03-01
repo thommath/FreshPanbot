@@ -88,20 +88,20 @@ const TouchContainer = ({
   }, []);
 
   const serverSizeStrokes = useMemo(() =>
-    strokes.map(convertToServerSize), [strokes]);
+    strokes?.map(convertToServerSize), [strokes]);
 
   const paths = useMemo(() =>
-    serverSizeStrokes.map(stroke => getStroke(stroke, {
-    })).map(getSvgPathFromStroke), [serverSizeStrokes]);
+    serverSizeStrokes?.map(stroke => getStroke(stroke, {
+    }))?.map(getSvgPathFromStroke), [serverSizeStrokes]);
 
   const cirlces = useMemo(() =>
-    serverSizeStrokes.filter(a => a.length).map((stroke) => (
+    serverSizeStrokes?.filter(a => a.length).map((stroke) => (
       <circle
         cx={stroke?.[0]?.x}
         cy={stroke?.[0]?.y}
         r={20}
         fill="black"
-      />)), [serverSizeStrokes]);
+      />)) || <></>, [serverSizeStrokes]);
 
   return (
     <div className="full-width full-height">
