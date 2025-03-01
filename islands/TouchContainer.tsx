@@ -128,11 +128,12 @@ const TouchContainer = ({
               </path>
             ))}
             {strokeSVG && <path
-              d={strokeSVG}
+              d={strokeSVG.slice(0, -1)}
               stroke-width={40}
               stroke-linecap="round"
-              style={{ stroke: "black" }}
-            />}
+              style={{ fill: "none", stroke: "black" }}
+            >
+            </path>}
 
           </svg>
           {containerRef && interactive && (
