@@ -27,6 +27,8 @@ spec:
       labels:
         name: freshpanbot-app
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
       - name: panbot-app
         image: 10.8.0.14:32000/freshpanbot
