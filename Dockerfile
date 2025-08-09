@@ -1,4 +1,4 @@
-FROM denoland/deno:2.3.3
+FROM denoland/deno:2.4.3
 
 ARG GIT_REVISION
 ENV DENO_DEPLOYMENT_ID=${GIT_REVISION}
@@ -6,7 +6,7 @@ ENV DENO_DEPLOYMENT_ID=${GIT_REVISION}
 WORKDIR /app
 
 COPY . .
-RUN deno cache main.ts --import-map=import_map.json
+RUN deno install --entrypoint main.ts
 
 EXPOSE 8000
 
