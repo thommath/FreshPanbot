@@ -7,7 +7,7 @@ ENV DENO_DIR=/app/.deno
 WORKDIR /app
 
 COPY import_map.json main.ts ./
-RUN deno run -A --watch=static/,routes/ main.ts
+RUN deno cache main.ts --import-map=import_map.json
 
 COPY . .
 
