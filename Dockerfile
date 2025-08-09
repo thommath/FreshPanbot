@@ -1,15 +1,20 @@
-FROM denoland/deno:2.4.3
+FROM denoland/deno:2.3.3
 
 ARG GIT_REVISION
 ENV DENO_DEPLOYMENT_ID=${GIT_REVISION}
+ENV DENO_DIR=/app/.deno
+
+RUN useradd -U -u 1000 --create-home appuser
 
 WORKDIR /app
 
+COPY import_map.json main.ts ./
+RUN mkdir -p $DENO_DIR && chown -R appuser:appuser /app
+RUN deno cache main.ts --import-map=import_map.json
+
 COPY . .
-RUN deno install --entrypoint main.ts
+
+USER appuser
 
 EXPOSE 8000
-
-RUN useradd -U -u 1000 appuser && chown -R 1000:1000 /app
-USER 1000
 CMD ["run", "-A", "main.ts"]
