@@ -10,7 +10,7 @@ WORKDIR /app
 
 COPY import_map.json main.ts ./
 RUN mkdir -p $DENO_DIR && chown -R appuser:appuser /app
-RUN deno cache main.ts --import-map=import_map.json
+RUN deno run -A --watch=static/,routes/ main.ts
 
 COPY . .
 
