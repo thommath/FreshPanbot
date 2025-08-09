@@ -63,17 +63,15 @@ const normalizeInput = ({ x, y, aspectRatio }: { x: number; y: number, aspectRat
 
 type Props = {
   setStrokeLength: (length: number) => void;
-  setMaxLength: (length: number) => void;
+  maxLength: number;
 };
 
-export default function DrawingComponent({ setStrokeLength, setMaxLength }: Props) {
+export default function DrawingComponent({ setStrokeLength, maxLength }: Props) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentStroke, setCurrentStroke] = useState<Stroke>([]);
   const [strokes, setStrokes] = useState<Stroke[]>([]);
   const [undoStack, setUndoStack] = useState<Stroke[]>([]);
   const [redoStack, setRedoStack] = useState<Stroke[]>([]);
-
-
 
   const handleMouseDown = useCallback((point: { x: number, y: number, aspectRatio?: number }) => {
     setIsDrawing(true);
@@ -128,15 +126,12 @@ export default function DrawingComponent({ setStrokeLength, setMaxLength }: Prop
     setUndoStack([]);
   };
 
-
-  const maxLength = useMemo(() => 3000, []);
   const strokeLength = useMemo(() => strokes.reduce((acc, cur) => acc + calculateStrokeLength(cur), 0) + calculateStrokeLength(currentStroke), [strokes, currentStroke]);
   const maxLengthIsMet = useMemo(() => strokeLength > maxLength, [strokeLength, maxLength]);
 
   useEffect(() => {
     setStrokeLength(strokeLength);
-    setMaxLength(maxLength);
-  }, [strokeLength, maxLength]);
+  }, [strokeLength]);
 
   return (
     <div class="flex gap-2 w-full flex-col items-center">

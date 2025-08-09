@@ -6,7 +6,7 @@ import InkLevel from "./InkLevel.tsx";
 
 export default function DrawingPage() {
     const [strokeLength, setStrokeLength] = useState(0);
-    const [maxLength, setMaxLength] = useState(0);
+    const [maxLength, setMaxLength] = useState(3000);
     return (
         <>
             <div class="flex flex-row w-full min-h-full bg-yellow-100">
@@ -18,12 +18,11 @@ export default function DrawingPage() {
                     <InkLevel currentLength={strokeLength} maxLength={maxLength} />
                 </div>
                 <div class="pt-8 bg-yellow-100 flex-grow-1">
-                    <DrawingComponent setMaxLength={setMaxLength} setStrokeLength={setStrokeLength} />
+                    <DrawingComponent maxLength={maxLength} setStrokeLength={setStrokeLength} />
                     <div className="text-center">
                         <QueueInfo />
                     </div>
                 </div>
-
             </div>
         </>
     );

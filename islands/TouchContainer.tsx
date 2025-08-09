@@ -104,7 +104,9 @@ const TouchContainer = ({
       />)) || <></>, [serverSizeStrokes]);
 
   return (
-    <div className="full-width full-height">
+    <div className="full-width full-height" style={{
+      flex: 1, aspectRatio: '1 / 1'
+    }}>
       <div className="relative rounded-full bg-gray-300 mt-8" style={{ width: `${size.height}px`, height: `${size.height}px`, minHeight: '250px', minWidth: '250px' }}>
         <div
           className={`absolute top-[${topPercentage}%] h-[${100 - topPercentage * 2
@@ -151,7 +153,7 @@ const TouchContainer = ({
           )}
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
