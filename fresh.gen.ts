@@ -15,7 +15,6 @@ import * as $api_deletePreset from "./routes/api/deletePreset.ts";
 import * as $api_get from "./routes/api/get.ts";
 import * as $api_print from "./routes/api/print.ts";
 import * as $api_queue from "./routes/api/queue.ts";
-import * as $api_redis from "./routes/api/redis.ts";
 import * as $api_set from "./routes/api/set.ts";
 import * as $index from "./routes/index.tsx";
 import * as $success from "./routes/success.tsx";
@@ -47,7 +46,6 @@ const manifest = {
     "./routes/api/get.ts": $api_get,
     "./routes/api/print.ts": $api_print,
     "./routes/api/queue.ts": $api_queue,
-    "./routes/api/redis.ts": $api_redis,
     "./routes/api/set.ts": $api_set,
     "./routes/index.tsx": $index,
     "./routes/success.tsx": $success,

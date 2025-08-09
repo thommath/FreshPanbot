@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { redis, REDIS_TO_PRINT_KEY } from "./redis.ts";
+import { redis, REDIS_TO_PRINT_KEY } from "../../scripts/redis.ts";
 
 const timeout = 25;
 const pull_interval = 100;

@@ -2,7 +2,7 @@ import { asset, Head } from "$fresh/runtime.ts";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Header from "../../components/Header.tsx";
 import Presets from "../../islands/Presets.tsx";
-import { redis, REDIS_PRESET_KEY } from "../api/redis.ts";
+import { redis, REDIS_PRESET_KEY } from "../../scripts/redis.ts";
 
 export type Preset = {
   id: string;

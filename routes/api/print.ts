@@ -4,7 +4,7 @@ import {
   REDIS_HISTORY_KEY,
   REDIS_QUEUE_KEY,
   REDIS_TO_PRINT_KEY,
-} from "./redis.ts";
+} from "../../scripts/redis.ts";
 
 export const handler: Handlers = {
   async POST() {

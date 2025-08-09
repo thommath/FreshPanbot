@@ -2,7 +2,7 @@ import { Handlers } from "$fresh/server.ts";
 import {
   redis,
   REDIS_QUEUE_KEY,
-} from "./redis.ts";
+} from "../../scripts/redis.ts";
 
 export const handler: Handlers = {
   async GET() {

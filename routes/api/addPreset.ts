@@ -1,5 +1,5 @@
 import { Handlers } from "$fresh/server.ts";
-import { redis, REDIS_PRESET_KEY } from "./redis.ts";
+import { redis, REDIS_PRESET_KEY } from "../../scripts/redis.ts";
 
 export const handler: Handlers = {
   async POST(req) {

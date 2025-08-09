@@ -6,7 +6,7 @@ import { SIZE } from "../../islands/Drawing.tsx";
 
 import PrintThis from "../../islands/printThis.tsx";
 import TouchContainer from "../../islands/TouchContainer.tsx";
-import { redis, REDIS_HISTORY_KEY } from "../api/redis.ts";
+import { redis, REDIS_HISTORY_KEY } from "../../scripts/redis.ts";
 
 interface PrinterQueue {
   items: string[];
