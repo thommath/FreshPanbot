@@ -36,8 +36,8 @@ steps:
     - ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
     - chmod -R 400 ~/.ssh
 
-    - git clone git@github.com:thommath/Homeserver-CD.git
-    - cd Homeserver-CD
+    - git clone git@github.com:thommath/H93.git
+    - cd H93
 
     - wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O yq
     - chmod +x yq
