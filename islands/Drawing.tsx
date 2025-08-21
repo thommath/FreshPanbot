@@ -28,6 +28,7 @@ const convertStrokesToServerPath = (listOfStokes: Stroke[]) => {
   ) + " Z";
 };
 const strokeToPath = (stroke: Stroke) => {
+  if (stroke.length === 0) return "";
   return "M " + stroke.map((p) => `${p.x} ${p.y}`).join(" L ");
 };
 
