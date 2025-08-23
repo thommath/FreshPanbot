@@ -130,7 +130,7 @@ const TouchContainer = ({
               </path>
             ))}
             {strokeSVG && <path
-              d={strokeSVG.slice(0, -4)}
+              d={strokeSVG.slice(0, -3)}
               stroke-width={40}
               stroke-linecap="round"
               style={{ fill: "none", stroke: "black" }}
