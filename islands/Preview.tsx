@@ -32,7 +32,7 @@ export default function Preview(props: PreviewProps) {
           }`}
         >
           <path
-            d={props.strokeSVG.slice(0, -1)}
+            d={props.strokeSVG}
             stroke-width={40}
             stroke-linecap="round"
             style={{ fill: "none", stroke: "black" }}
